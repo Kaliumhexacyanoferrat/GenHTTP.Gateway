@@ -19,8 +19,8 @@ namespace GenHTTP.Gateway
         public static IServerBuilder Build(GatewayConfiguration config)
         {
             var server = Server.Create()
-                               .Bind(IPAddress.Any, 8080)
-                               .Bind(IPAddress.IPv6Any, 8080)
+                               .Bind(IPAddress.Any, 80)
+                               .Bind(IPAddress.IPv6Any, 80)
                                .Compression(new BrotliCompression())
                                .Console();
 
@@ -28,8 +28,8 @@ namespace GenHTTP.Gateway
 
             if (certificateProvider != null)
             {
-                server.Bind(IPAddress.Any, 8443, certificateProvider)
-                      .Bind(IPAddress.IPv6Any, 8443, certificateProvider);
+                server.Bind(IPAddress.Any, 443, certificateProvider)
+                      .Bind(IPAddress.IPv6Any, 443, certificateProvider);
             }
 
 #if DEBUG

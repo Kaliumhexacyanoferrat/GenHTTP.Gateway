@@ -31,6 +31,8 @@ namespace GenHTTP.Gateway
         {
             var layout = Layout.Create();
 
+            layout.Add(".well-known", Static.Files("./.well-known"));
+
             if (config.Default != null)
             {
                 layout.Default(GetRouter(config.Default));
