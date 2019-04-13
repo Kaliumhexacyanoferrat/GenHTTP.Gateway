@@ -2,13 +2,13 @@
 
 The GenHTTP Gateway provides a simple way to provide all your web applications over a single, HTTPS secured entry point.
 
-# Tags
+## Tags
 
 | Tag           | Description |
 | ------------- |-------------|
 | linux-x64     | Alpine based image to run on Linux x64 hosts |
 
-# Initial Setup
+## Initial Setup
 
 When starting the gateway via docker, an example configuration file will be created in the mounted
 configuration directory. Adjust this configuration file to your needs and restart the container.
@@ -60,7 +60,7 @@ hosts:
             destination: http://10.0.0.3/admin/
 ~~~
 
-# Volumes
+## Volumes
 
 | Volume        | Description |
 | ------------- |-------------|
@@ -68,7 +68,7 @@ hosts:
 | /data/gateway/certs | The certificates to be used for SSL |
 | /data/gateway/data | Additional data such as the .well-known folder |
 
-# SSL / Let's Encrypt
+## SSL / Let's Encrypt
 
 The gateway can be used with `certbot` to generate SSL certificates:
 
