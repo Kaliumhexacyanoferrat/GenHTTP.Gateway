@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+
 using GenHTTP.Gateway.Configuration;
 
 namespace GenHTTP.Gateway
@@ -10,7 +13,7 @@ namespace GenHTTP.Gateway
     public static class Program
     {
 
-        public static int Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             try
             {
@@ -26,7 +29,12 @@ namespace GenHTTP.Gateway
                 using (var server = host.Build())
                 {
                     Console.WriteLine("Running ...");
+
+#if DEBUG
                     Console.ReadLine();
+#else
+                    await Task.Run(() => Thread.Sleep(Timeout.Infinite));
+#endif
                 }
 
                 return 0;
