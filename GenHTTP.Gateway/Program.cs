@@ -10,21 +10,31 @@ namespace GenHTTP.Gateway
     public static class Program
     {
 
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            var env = Environment.Default();
-
-            var config = SetupConfig(env);
-
-            var router = Router.Build(env, config);
-
-            var host = Host.Build(env, config)
-                           .Router(router);
-
-            using (var server = host.Build())
+            try
             {
-                Console.WriteLine("Running ...");
-                Console.ReadLine();
+                var env = Environment.Default();
+
+                var config = SetupConfig(env);
+
+                var router = Router.Build(env, config);
+
+                var host = Host.Build(env, config)
+                               .Router(router);
+
+                using (var server = host.Build())
+                {
+                    Console.WriteLine("Running ...");
+                    Console.ReadLine();
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return -1;
             }
         }
 
@@ -44,7 +54,7 @@ namespace GenHTTP.Gateway
             }
 
             var wellKnown = Path.Combine(env.Data, ".well-known");
-            
+
             if (!Directory.Exists(wellKnown))
             {
                 Directory.CreateDirectory(wellKnown);
