@@ -10,8 +10,8 @@ The GenHTTP Gateway provides a simple way to provide all your web applications o
 
 # Initial Setup
 
-When starting the gateway via docker, a example configuration file will be created in the mounted
-configuration directory. Adjust this configuration file to your need and restart the container.
+When starting the gateway via docker, an example configuration file will be created in the mounted
+configuration directory. Adjust this configuration file to your needs and restart the container.
 
 ~~~bash
 sudo docker run -d -p 80:80 \
@@ -22,7 +22,7 @@ sudo docker run -d -p 80:80 \
 		   genhttp/gateway:linux-x64
 ~~~
 
-Sample configuration file:
+Sample `gateway.yaml` configuration file:
 
 ~~~yaml
 hosts:
