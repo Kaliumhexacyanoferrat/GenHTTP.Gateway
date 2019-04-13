@@ -22,7 +22,7 @@ namespace GenHTTP.Gateway
 
         public static Environment Docker()
         {
-            return new Environment("/config/", "/data/", "/certs/");
+            return new Environment("/app/config/", "/app/data/", "/app/certs/");
         }
 
         public static Environment Local()
