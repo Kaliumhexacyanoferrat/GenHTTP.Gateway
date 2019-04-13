@@ -15,7 +15,7 @@ When starting the gateway via docker, an example configuration file will be crea
 configuration directory. Adjust this configuration file to your needs and restart the container.
 
 ~~~bash
-sudo docker run -d -p 80:80 \
+sudo docker run -d -p 80:80 \ 
            -p 443:443 \
 		   -v /data/gateway/config:/app/config \
 		   -v /data/gateway/data:/app/data \
