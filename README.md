@@ -7,6 +7,7 @@ The GenHTTP Gateway provides a simple way to provide all your web applications o
 | Tag           | Description |
 | ------------- |-------------|
 | linux-x64     | Alpine based image to run on Linux x64 hosts |
+| linux-arm32   | Image to run on ARMv7-based Linux hosts (such as the Raspberry Pi) |
 
 ## Initial Setup
 
