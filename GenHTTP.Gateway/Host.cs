@@ -16,7 +16,7 @@ namespace GenHTTP.Gateway
     public class Host
     {
 
-        public static IServerBuilder Build(GatewayConfiguration config)
+        public static IServerBuilder Build(Environment environment, GatewayConfiguration config)
         {
             var server = Server.Create()
                                .Bind(IPAddress.Any, 80)
@@ -24,7 +24,7 @@ namespace GenHTTP.Gateway
                                .Compression(new BrotliCompression())
                                .Console();
 
-            var certificateProvider = CertificateLoader.GetProvider(config);
+            var certificateProvider = CertificateLoader.GetProvider(environment, config);
 
             if (certificateProvider != null)
             {

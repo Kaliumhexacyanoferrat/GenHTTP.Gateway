@@ -13,7 +13,7 @@ namespace GenHTTP.Gateway.Security
     public static class CertificateLoader
     {
 
-        public static ICertificateProvider? GetProvider(GatewayConfiguration config)
+        public static ICertificateProvider? GetProvider(Environment environment, GatewayConfiguration config)
         {
             var certificates = new Dictionary<string, X509Certificate2>();
 
@@ -25,7 +25,7 @@ namespace GenHTTP.Gateway.Security
 
                     if (cert != null)
                     {
-                        certificates.Add(host.Key, LoadCertificate(cert));
+                        certificates.Add(host.Key, LoadCertificate(environment, cert));
                     }
                 }
             }
@@ -38,14 +38,14 @@ namespace GenHTTP.Gateway.Security
             return null;
         }
 
-        private static X509Certificate2 LoadCertificate(CertificateConfiguration config)
+        private static X509Certificate2 LoadCertificate(Environment environment, CertificateConfiguration config)
         {
             if (config.Pfx == null)
             {
                 throw new InvalidOperationException("Certificate file has not been specified");
             }
 
-            return new X509Certificate2(File.ReadAllBytes(config.Pfx));
+            return new X509Certificate2(File.ReadAllBytes(Path.Combine(environment.Certificates, config.Pfx)));
         }
 
     }

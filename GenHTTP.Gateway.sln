@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenHTTP.Gateway", "GenHTTP.Gateway\GenHTTP.Gateway.csproj", "{7FA5A8F1-C2E6-4DAC-BCA4-7529FAA5A8D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenHTTP.Api", "..\GenHTTP\API\GenHTTP.API\GenHTTP.Api.csproj", "{0F894E1B-5A13-4CDC-9EB0-C09987EF1A20}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenHTTP.Core", "..\GenHTTP\Core\GenHTTP.Core\GenHTTP.Core.csproj", "{1AD15501-CB52-4537-A218-89374CCBDB8C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenHTTP.Modules.Core", "..\GenHTTP\Modules\GenHTTP.Modules.Core\GenHTTP.Modules.Core.csproj", "{B1D9FD2D-4111-4A0E-95B3-5D4AE2F40E6F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5546F9F9-28F1-4FBD-B284-AC0A86E197BA}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,6 @@ Global
 		{7FA5A8F1-C2E6-4DAC-BCA4-7529FAA5A8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FA5A8F1-C2E6-4DAC-BCA4-7529FAA5A8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FA5A8F1-C2E6-4DAC-BCA4-7529FAA5A8D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F894E1B-5A13-4CDC-9EB0-C09987EF1A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F894E1B-5A13-4CDC-9EB0-C09987EF1A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F894E1B-5A13-4CDC-9EB0-C09987EF1A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F894E1B-5A13-4CDC-9EB0-C09987EF1A20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AD15501-CB52-4537-A218-89374CCBDB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AD15501-CB52-4537-A218-89374CCBDB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AD15501-CB52-4537-A218-89374CCBDB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AD15501-CB52-4537-A218-89374CCBDB8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1D9FD2D-4111-4A0E-95B3-5D4AE2F40E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1D9FD2D-4111-4A0E-95B3-5D4AE2F40E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1D9FD2D-4111-4A0E-95B3-5D4AE2F40E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1D9FD2D-4111-4A0E-95B3-5D4AE2F40E6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

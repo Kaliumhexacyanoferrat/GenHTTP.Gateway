@@ -11,14 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GenHTTP.Core" Version="2.2.0" />
     <PackageReference Include="YamlDotNet" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    
-    <ProjectReference Include="..\..\GenHTTP\Core\GenHTTP.Core\GenHTTP.Core.csproj" />
-    <ProjectReference Include="..\..\GenHTTP\Modules\GenHTTP.Modules.Core\GenHTTP.Modules.Core.csproj" />
-    
   </ItemGroup>
 
   <ItemGroup>

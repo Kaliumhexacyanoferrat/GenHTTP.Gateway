@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 using GenHTTP.Api.Modules;
@@ -12,7 +13,7 @@ namespace GenHTTP.Gateway
     public static class Router
     {
 
-        public static IRouterBuilder Build(GatewayConfiguration config)
+        public static IRouterBuilder Build(Environment environment, GatewayConfiguration config)
         {
             var hosts = VirtualHosts.Create();
 
@@ -20,18 +21,18 @@ namespace GenHTTP.Gateway
             {
                 foreach (var host in config.Hosts)
                 {
-                    hosts.Add(host.Key, GetRouter(host.Value));
+                    hosts.Add(host.Key, GetRouter(environment, host.Value));
                 }
             }
 
             return hosts;
         }
 
-        private static IRouterBuilder GetRouter(HostConfiguration config)
+        private static IRouterBuilder GetRouter(Environment environment, HostConfiguration config)
         {
             var layout = Layout.Create();
 
-            layout.Add(".well-known", Static.Files("./.well-known"));
+            layout.Add(".well-known", Static.Files(Path.Combine(environment.Data, ".well-known")));
 
             if (config.Default != null)
             {

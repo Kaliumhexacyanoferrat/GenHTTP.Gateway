@@ -12,11 +12,13 @@ namespace GenHTTP.Gateway
 
         public static void Main(string[] args)
         {
-            var config = ConfigurationFile.Load("gateway.yaml");
+            var env = Environment.Default();
 
-            var router = Router.Build(config);
+            var config = ConfigurationFile.Load(Path.Combine(env.Config, "gateway.yaml"));
 
-            var host = Host.Build(config)
+            var router = Router.Build(env, config);
+
+            var host = Host.Build(env, config)
                            .Router(router);
 
             using (var server = host.Build())

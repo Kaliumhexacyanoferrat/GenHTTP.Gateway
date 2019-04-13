@@ -18,6 +18,8 @@ namespace GenHTTP.Gateway.Security
 
         public X509Certificate2? Default { get; }
 
+        public IEnumerable<string> SupportedHosts => Certificates.Keys;
+
         #endregion
 
         public CertificateProvider(Dictionary<string, X509Certificate2> certificates,
