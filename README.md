@@ -65,9 +65,9 @@ hosts:
 
 | Volume        | Description |
 | ------------- |-------------|
-| /data/gateway/config | The configuration files of the gateway |
-| /data/gateway/certs | The certificates to be used for SSL |
-| /data/gateway/data | Additional data such as the .well-known folder |
+| /app/config | The configuration files of the gateway |
+| /app/certs | The certificates to be used for SSL |
+| /app/data | Additional data such as the .well-known folder |
 
 ## SSL / Let's Encrypt
 
