@@ -20,4 +20,3 @@ ENTRYPOINT ["./GenHTTP.Gateway"]
 VOLUME ["/app/data", "/app/certs", "/app/config"]
 
 EXPOSE 80 443
-
