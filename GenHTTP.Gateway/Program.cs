@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Reflection;
 using GenHTTP.Gateway.Configuration;
 
 namespace GenHTTP.Gateway
@@ -14,7 +14,7 @@ namespace GenHTTP.Gateway
         {
             var env = Environment.Default();
 
-            var config = ConfigurationFile.Load(Path.Combine(env.Config, "gateway.yaml"));
+            var config = SetupConfig(env);
 
             var router = Router.Build(env, config);
 
@@ -26,6 +26,31 @@ namespace GenHTTP.Gateway
                 Console.WriteLine("Running ...");
                 Console.ReadLine();
             }
+        }
+
+        private static GatewayConfiguration SetupConfig(Environment env)
+        {
+            var configFile = Path.Combine(env.Config, "gateway.yaml");
+
+            if (!File.Exists(configFile))
+            {
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GenHTTP.Gateway.Resources.Default.yaml"))
+                {
+                    using (var config = File.OpenWrite(configFile))
+                    {
+                        stream.CopyTo(config);
+                    }
+                }
+            }
+
+            var wellKnown = Path.Combine(env.Data, ".well-known");
+            
+            if (!Directory.Exists(wellKnown))
+            {
+                Directory.CreateDirectory(wellKnown);
+            }
+
+            return ConfigurationFile.Load(configFile);
         }
 
     }

@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Default.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Default.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GenHTTP.Core" Version="2.2.0" />
     <PackageReference Include="YamlDotNet" Version="6.0.0" />
   </ItemGroup>
