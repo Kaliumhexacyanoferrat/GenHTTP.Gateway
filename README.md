@@ -1,6 +1,6 @@
 # Introduction
 
-The GenHTTP Gateway provides a simple way to provide all your web applications over a single, HTTPS secured entry point.
+The GenHTTP Gateway provides a simple way to serve all your web applications over a single, HTTPS secured entry point.
 
 ## Tags
 
@@ -15,12 +15,29 @@ When starting the gateway via docker, an example configuration file will be crea
 configuration directory. Adjust this configuration file to your needs and restart the container.
 
 ~~~bash
-sudo docker run -d -p 80:80 \ 
-           -p 443:443 \
-		   -v /data/gateway/config:/app/config \
-		   -v /data/gateway/data:/app/data \
-		   -v /data/gateway/certs:/app/certs \
-		   genhttp/gateway:linux-x64
+docker run -d -p 80:80 \ 
+              -p 443:443 \
+              -v /data/gateway/config:/app/config \
+	          -v /data/gateway/data:/app/data \
+	          -v /data/gateway/certs:/app/certs \
+	          genhttp/gateway:linux-x64
+~~~
+
+Syntax for docker compositions:
+
+~~~yaml
+services:
+
+  gateway:
+    image: genhttp/gateway:linux-x64
+    restart: always
+    volumes:
+      - /data/gateway/config:/app/config
+      - /data/gateway/data:/app/data
+      - /data/gateway/certs:/app/certs
+    ports:
+      - 80:80
+      - 443:443
 ~~~
 
 Sample `gateway.yaml` configuration file:
@@ -37,7 +54,7 @@ hosts:
 
     # security:
     #   certificate:
-    #    pfx: domain1.pfx
+    #    pfx: domain1.com.pfx
 
     # the web page that will be shown if domain1.com is called
     default:
