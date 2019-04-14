@@ -78,7 +78,7 @@ namespace GenHTTP.Gateway
             {
                 return ReverseProxy.Create()
                                    .Upstream(config.Destination)
-                                   .ConnectTimeout(TimeSpan.FromSeconds(12))
+                                   .ConnectTimeout(TimeSpan.FromMinutes(3))
                                    .ReadTimeout(TimeSpan.FromMinutes(3));
             }
 
