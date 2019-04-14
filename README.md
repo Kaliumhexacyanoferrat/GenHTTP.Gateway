@@ -18,9 +18,9 @@ configuration directory. Adjust this configuration file to your needs and restar
 docker run -d -p 80:80 \ 
               -p 443:443 \
               -v /data/gateway/config:/app/config \
-	          -v /data/gateway/data:/app/data \
-	          -v /data/gateway/certs:/app/certs \
-	          genhttp/gateway:linux-x64
+              -v /data/gateway/data:/app/data \
+              -v /data/gateway/certs:/app/certs \
+              genhttp/gateway:linux-x64
 ~~~
 
 Syntax for docker compositions:
