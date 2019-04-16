@@ -44,28 +44,18 @@ Sample `gateway.yaml` configuration file:
 ~~~yaml
 hosts:
 
-  # configuration for a specific host
-  # duplicate this entry to add another host
   domain1.com:
 
-    # uncomment this block to support SSL
-    # mount your certificates in /app/certs
+    security:
+      certificate:
+        pfx: domain1.com.pfx
 
-    # security:
-    #   certificate:
-    #    pfx: domain1.com.pfx
-
-    # the web page that will be shown if domain1.com is called
+    # domain1.com/*
     default:
       destination: http://10.0.0.2:8080
 
-    # additional routes to be accessible via the gateway
     routes:
-
-      # routes can be chained, the children of this entry will be
-      # accessible via domain1.com/admin/
       admin:
-
         routes:
 
           # domain1.com/admin/portainer/
