@@ -16,31 +16,49 @@ namespace GenHTTP.Gateway
 
         public string Config { get; }
 
+        public bool Containerized { get; }
+
         #endregion
 
         #region Initialization
 
-        public static Environment Docker()
+        public static Environment DockerLinux()
         {
-            return new Environment("/app/config/", "/app/data/", "/app/certs/");
+            return new Environment("/app/config/", "/app/data/", "/app/certs/", true);
+        }
+
+        public static Environment DockerWindows()
+        {
+            return new Environment(@"C:\App\Config\", @"C:\App\Data\", @"C:\App\Certs\", true);
         }
 
         public static Environment Local()
         {
-            return new Environment("./config/", "./data/", "./certs/");
+            return new Environment("./config/", "./data/", "./certs/", false);
         }
 
         public static Environment Default()
         {
-#if DEBUG
-            return Local();
-#else
-            return Docker();
-#endif
+            var flavor = System.Environment.GetEnvironmentVariable("DOCKER_FLAVOR");
+            
+            if (string.IsNullOrEmpty(flavor))
+            {
+                return Local();
+            }
+
+            switch (flavor)
+            {
+                case "windows": return DockerWindows();
+                case "linux": return DockerLinux();
+            }
+
+            throw new NotSupportedException($"Flavor '{flavor}' is not supported");
         }
 
-        private Environment(string config, string data, string certs)
+        private Environment(string config, string data, string certs, bool containerized)
         {
+            Containerized = containerized;
+
             Certificates = certs;
             Data = data;
             Config = config;

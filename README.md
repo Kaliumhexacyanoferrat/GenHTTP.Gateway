@@ -8,11 +8,12 @@ The GenHTTP Gateway provides a simple way to serve all your web applications ove
 | ------------- |-------------|
 | linux-x64     | Alpine based image to run on Linux x64 hosts |
 | linux-arm32   | Image to run on ARMv7-based Linux hosts (such as the Raspberry Pi) |
+| windows-x64   | Image for Windows 10 / Server 2016 based on Nano Server 1809 |
+| windows-arm32 | Image for Windows 10 IoT Core, based on Nano Server 1809 |
 
 ## Initial Setup
 
-When starting the gateway via docker, an example configuration file will be created in the mounted
-configuration directory. Adjust this configuration file to your needs and restart the container.
+When starting the gateway via docker, an example configuration file will be created in the mounted configuration directory. Adjust this configuration file to your needs and restart the container.
 
 ~~~bash
 docker run -d -p 80:80 \ 
@@ -80,11 +81,15 @@ hosts:
 
 ## Volumes
 
+The following volumes are available in this image:
+
 | Volume        | Description |
 | ------------- |-------------|
 | /app/config | The configuration files of the gateway |
 | /app/certs | The certificates to be used for SSL |
 | /app/data | Additional data such as the .well-known folder |
+
+For Windows volume paths, see the section below.
 
 ## SSL / Let's Encrypt
 
@@ -98,4 +103,17 @@ Currently, only PFX certificates are supported by the gateway. Run the following
 
 ~~~bash
 openssl pkcs12 -export -out domain1.com.pfx -inkey privkey.pem -in fullchain.pem
+~~~
+
+## Volumes on Windows
+
+When running a Windows based image, the volume path format differs:
+
+~~~cmd
+docker run -d -p 80:80 ^
+              -p 443:443 ^
+              -v C:\Temp\Gateway\Config:C:/App/Config ^
+              -v C:\Temp\Gateway\Data:C:/App/Data ^
+              -v C:\Temp\Gateway\Certs:C:/App/Certs ^
+              genhttp/gateway:windows-x64
 ~~~

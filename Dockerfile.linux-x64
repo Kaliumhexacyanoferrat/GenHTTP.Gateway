@@ -13,6 +13,7 @@ WORKDIR /app/gateway
 RUN dotnet publish -c Release -r linux-musl-x64 -o out
 
 FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-alpine AS runtime
+ENV DOCKER_FLAVOR=linux
 WORKDIR /app
 COPY --from=build /app/gateway/out ./
 ENTRYPOINT ["./GenHTTP.Gateway"]

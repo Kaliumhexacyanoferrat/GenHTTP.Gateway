@@ -30,11 +30,14 @@ namespace GenHTTP.Gateway
                 {
                     Console.WriteLine("Running ...");
 
-#if DEBUG
-                    Console.ReadLine();
-#else
-                    await Task.Run(() => Thread.Sleep(Timeout.Infinite));
-#endif
+                    if (env.Containerized)
+                    {
+                        await Task.Run(() => Thread.Sleep(Timeout.Infinite));
+                    }
+                    else
+                    {
+                        Console.ReadLine();
+                    }
                 }
 
                 return 0;
@@ -52,13 +55,7 @@ namespace GenHTTP.Gateway
 
             if (!File.Exists(configFile))
             {
-                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GenHTTP.Gateway.Resources.Default.yaml"))
-                {
-                    using (var config = File.OpenWrite(configFile))
-                    {
-                        stream.CopyTo(config);
-                    }
-                }
+                File.Copy("./Resources/Default.yaml", configFile);
             }
 
             var wellKnown = Path.Combine(env.Data, ".well-known");
