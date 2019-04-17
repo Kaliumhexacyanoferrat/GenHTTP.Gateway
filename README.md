@@ -19,6 +19,7 @@ When starting the gateway via docker, an example configuration file will be crea
 docker run -d -p 80:80 \ 
               -p 443:443 \
               -v /data/gateway/config:/app/config \
+              -v /data/gateway/data:/app/data \
               -v /data/gateway/certs:/app/certs \
               genhttp/gateway:linux-x64
 ~~~
@@ -33,6 +34,7 @@ services:
     restart: always
     volumes:
       - /data/gateway/config:/app/config
+      - /data/gateway/data:/app/data
       - /data/gateway/certs:/app/certs
     ports:
       - 80:80
@@ -101,6 +103,7 @@ When running a Windows based image, the volume path format differs:
 docker run -d -p 80:80 ^
               -p 443:443 ^
               -v C:\Data\Gateway\Config:C:/App/Config ^
+              -v C:\Data\Gateway\Data:C:/App/Data ^
               -v C:\Data\Gateway\Certs:C:/App/Certs ^
               genhttp/gateway:windows-x64
 ~~~
