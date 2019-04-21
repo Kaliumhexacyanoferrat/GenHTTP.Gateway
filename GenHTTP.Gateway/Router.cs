@@ -4,7 +4,9 @@ using System.IO;
 using System.Text;
 
 using GenHTTP.Api.Modules;
+using GenHTTP.Api.Routing;
 using GenHTTP.Gateway.Configuration;
+using GenHTTP.Gateway.Routing;
 using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
@@ -28,12 +30,10 @@ namespace GenHTTP.Gateway
             return hosts;
         }
 
-        private static IRouterBuilder GetRouter(Environment environment, HostConfiguration config)
+        private static IRouter GetRouter(Environment environment, HostConfiguration config)
         {
             var layout = Layout.Create();
-
-            layout.Add(".well-known", Static.Files(Path.Combine(environment.Data, ".well-known")));
-
+            
             if (config.Default != null)
             {
                 layout.Default(GetRouter(config.Default));
@@ -47,7 +47,7 @@ namespace GenHTTP.Gateway
                 }
             }
 
-            return layout;
+            return new FileOverlay(environment, layout.Build());
         }
 
         private static IRouterBuilder GetRouter(RouteConfiguration config)
