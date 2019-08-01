@@ -55,6 +55,11 @@ namespace GenHTTP.Gateway
 
             if (!File.Exists(configFile))
             {
+                if (!Directory.Exists("./config"))
+                {
+                    Directory.CreateDirectory("./config");
+                }
+
                 File.Copy("./Resources/Default.yaml", configFile);
             }
 
