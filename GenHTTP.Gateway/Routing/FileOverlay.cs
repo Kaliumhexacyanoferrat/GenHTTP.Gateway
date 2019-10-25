@@ -37,6 +37,7 @@ namespace GenHTTP.Gateway.Routing
         public FileOverlay(Environment environment, IRouter inner) : base(null, null)
         {
             Inner = inner;
+            inner.Parent = this;
 
             DataDirectory = new DirectoryInfo(environment.Data).FullName;
             Overlay = Static.Files(environment.Data).Build();
