@@ -10,7 +10,7 @@ RUN dotnet restore
 WORKDIR /app/
 COPY GenHTTP.Gateway/. ./gateway/
 WORKDIR /app/gateway
-RUN dotnet publish -c Release -r linux-arm -o out
+RUN dotnet publish -c Release -r linux-arm -o out --self-contained true /p:PublishTrimmed=true
 
 FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-stretch-slim-arm32v7 AS runtime
 ENV DOCKER_FLAVOR=linux
