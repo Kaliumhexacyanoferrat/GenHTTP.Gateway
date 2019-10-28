@@ -67,6 +67,10 @@ hosts:
           # domain1.com/admin/pi-hole/
           pi-hole:
             destination: http://10.0.0.3/admin/
+
+          # domain1.com/admin/files/
+          files:
+            listing: /data/files/
 ~~~
 
 ## Volumes

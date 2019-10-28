@@ -14,7 +14,7 @@ namespace GenHTTP.Gateway.Configuration
 
         public static GatewayConfiguration Load(string file)
         {
-            var deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention())
+            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
                                                         .Build();
 
             return deserializer.Deserialize<GatewayConfiguration>(File.ReadAllText(file));

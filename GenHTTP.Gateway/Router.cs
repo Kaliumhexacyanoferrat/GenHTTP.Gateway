@@ -5,8 +5,10 @@ using System.Text;
 
 using GenHTTP.Api.Modules;
 using GenHTTP.Api.Routing;
+
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
+
 using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
@@ -59,6 +61,10 @@ namespace GenHTTP.Gateway
             if (content != null)
             {
                 layout.Default(content);
+            }
+            else if (config.Listing != null)
+            {
+                layout.Default(DirectoryListing.From(config.Listing));
             }
 
             if (config.Routes != null)

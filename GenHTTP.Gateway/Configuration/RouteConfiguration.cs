@@ -12,6 +12,8 @@ namespace GenHTTP.Gateway.Configuration
 
         public string? Destination { get; set; }
 
+        public string? Listing { get; set; }
+
     }
 
 }
