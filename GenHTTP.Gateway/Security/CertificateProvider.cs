@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 using GenHTTP.Api.Infrastructure;
-using GenHTTP.Gateway.Configuration;
 
 namespace GenHTTP.Gateway.Security
 {
@@ -18,8 +15,6 @@ namespace GenHTTP.Gateway.Security
 
         public X509Certificate2? Default { get; }
 
-        public IEnumerable<string> SupportedHosts => Certificates.Keys;
-
         #endregion
 
         public CertificateProvider(Dictionary<string, X509Certificate2> certificates,
@@ -31,7 +26,7 @@ namespace GenHTTP.Gateway.Security
 
         #region Functionality
 
-        public X509Certificate2 Provide(string? host)
+        public X509Certificate2? Provide(string? host)
         {
             if (host != null)
             {
@@ -41,12 +36,7 @@ namespace GenHTTP.Gateway.Security
                 }
             }
 
-            if (Default != null)
-            {
-                return Default;
-            }
-
-            throw new InvalidOperationException($"No certificate for host '{host}'");
+            return Default;
         }
 
         #endregion

@@ -8,7 +8,6 @@ using GenHTTP.Core;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
-using GenHTTP.Gateway.Utilities;
 
 namespace GenHTTP.Gateway
 {
@@ -21,7 +20,6 @@ namespace GenHTTP.Gateway
             var server = Server.Create()
                                .Bind(IPAddress.Any, 80)
                                .Bind(IPAddress.IPv6Any, 80)
-                               .Compression(new BrotliCompression())
                                .Console();
 
             var certificateProvider = CertificateLoader.GetProvider(environment, config);
