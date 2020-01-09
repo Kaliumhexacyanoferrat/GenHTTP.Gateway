@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1909 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1809 AS build
 WORKDIR /App
 
 # copy csproj and restore as distinct layers
@@ -12,7 +12,7 @@ COPY GenHTTP.Gateway/. ./Gateway/
 WORKDIR /App/Gateway
 RUN dotnet publish -c Release -r win10-arm -o out --self-contained true /p:PublishTrimmed=true
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909-arm32v7 AS runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7 AS runtime
 ENV DOCKER_FLAVOR=windows
 WORKDIR /App
 COPY --from=build /App/Gateway/out ./
