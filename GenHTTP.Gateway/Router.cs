@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
-using GenHTTP.Api.Modules;
 using GenHTTP.Api.Routing;
 
 using GenHTTP.Gateway.Configuration;
@@ -35,7 +31,7 @@ namespace GenHTTP.Gateway
         private static IRouter GetRouter(Environment environment, HostConfiguration config)
         {
             var layout = Layout.Create();
-            
+
             if (config.Default != null)
             {
                 layout.Default(GetRouter(config.Default));
@@ -78,7 +74,7 @@ namespace GenHTTP.Gateway
             return layout;
         }
 
-        private static IContentBuilder? GetContent(RouteConfiguration config)
+        private static IRouterBuilder? GetContent(RouteConfiguration config)
         {
             if (config.Destination != null)
             {
