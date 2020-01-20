@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 using GenHTTP.Gateway.Configuration;
 
@@ -13,40 +8,17 @@ namespace GenHTTP.Gateway
     public static class Program
     {
 
-        public static async Task<int> Main(string[] args)
+        public static int Main(string[] args)
         {
-            try
-            {
-                var env = Environment.Default();
+            var env = Environment.Default();
 
-                var config = SetupConfig(env);
+            var config = SetupConfig(env);
 
-                var router = Router.Build(env, config);
+            var router = Router.Build(env, config);
 
-                var host = Host.Build(env, config)
-                               .Router(router);
-
-                using (var server = host.Build())
-                {
-                    Console.WriteLine("Running ...");
-
-                    if (env.Containerized)
-                    {
-                        await Task.Run(() => Thread.Sleep(Timeout.Infinite));
-                    }
-                    else
-                    {
-                        Console.ReadLine();
-                    }
-                }
-
-                return 0;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return -1;
-            }
+            return Engine.Setup(env, config)
+                         .Router(router)
+                         .Run();
         }
 
         private static GatewayConfiguration SetupConfig(Environment env)

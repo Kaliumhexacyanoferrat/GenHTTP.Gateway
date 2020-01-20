@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using GenHTTP.Api.Modules;
+using GenHTTP.Api.Protocol;
 using GenHTTP.Api.Routing;
 using GenHTTP.Modules.Core;
 using GenHTTP.Modules.Core.General;
@@ -60,6 +61,8 @@ namespace GenHTTP.Gateway.Routing
                 Inner.HandleContext(current);
             }
         }
+
+        public override IEnumerable<ContentElement> GetContent(IRequest request, string basePath) => Inner.GetContent(request, basePath);
 
         public override string? Route(string path, int currentDepth)
         {

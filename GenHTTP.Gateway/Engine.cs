@@ -12,15 +12,15 @@ using GenHTTP.Gateway.Security;
 namespace GenHTTP.Gateway
 {
 
-    public class Host
+    public class Engine
     {
 
-        public static IServerBuilder Build(Environment environment, GatewayConfiguration config)
+        public static IServerHost Setup(Environment environment, GatewayConfiguration config)
         {
-            var server = Server.Create()
-                               .Bind(IPAddress.Any, 80)
-                               .Bind(IPAddress.IPv6Any, 80)
-                               .Console();
+            var server = Host.Create()
+                             .Bind(IPAddress.Any, 80)
+                             .Bind(IPAddress.IPv6Any, 80)
+                             .Console();
 
             var certificateProvider = CertificateLoader.GetProvider(environment, config);
 
