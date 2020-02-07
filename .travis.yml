@@ -1,0 +1,28 @@
+dist: xenial
+    
+sudo: required
+
+language: csharp
+mono: none
+
+dotnet: 3.1
+
+solution: GenHTTP.Gateway.sln
+
+env:
+  - DOTNET_ROLL_FORWARD=Major
+
+addons:
+  sonarcloud:
+    organization: "kaliumhexacyanoferrat"
+    token:
+      secure: $SONAR_TOKEN
+
+install:
+  - git fetch --unshallow --tags
+
+script:
+  - dotnet tool restore
+  - dotnet sonarscanner begin /k:"GenHTTP.Gateway" /d:sonar.login="$SONAR_TOKEN" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*"
+  - dotnet build GenHTTP.sln -c Release
+  - dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
