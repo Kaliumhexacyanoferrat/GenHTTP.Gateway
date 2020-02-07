@@ -2,6 +2,8 @@
 
 The GenHTTP Gateway provides a simple way to serve all your web applications over a single, HTTPS secured entry point.
 
+[![Build Status](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway.svg?branch=master)](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GenHTTP.Gateway&metric=ncloc)](https://sonarcloud.io/dashboard?id=GenHTTP.Gateway)
+
 ## Usage
 
 The GenHTTP Gateway is available as a docker image on [DockerHub](https://hub.docker.com/r/genhttp/gateway). You will find examples on how to run and to configure the gateway there.
