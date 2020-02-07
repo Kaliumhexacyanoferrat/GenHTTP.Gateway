@@ -31,8 +31,18 @@
           # domain1.com/admin/pi-hole/
           pi-hole:
             destination: http://10.0.0.3/admin/
+      
+      # provides a simple web UI to browse files within the specified directory
+      # (requires the target path to be available through a volume)
+      # accessible via domain1.com/directory-browsing/
+      directory-browsing:
+        listing: ./
 
-          # domain1.com/admin/files/
-          files:
-            listing: ./
-            
+      # serves the files within the given directory as static content
+      # (requires the target path to be available through a volume)
+      # accessible via domain1.com/static-content/
+      static-content:
+        
+        content:
+          directory: ./content/
+          index: index.html # optional

@@ -46,14 +46,26 @@ Sample `gateway.yaml` configuration file:
 ~~~yaml
 hosts:
 
-  domain1.com:    
+  # configuration for a specific host
+  # duplicate this entry to add another host
+  domain1.com:
 
-    # domain1.com/...
+    # uncomment this block to support SSL
+    # mount your certificates in /app/certs
+
+    # security:
+    #   certificate:
+    #    pfx: domain1.pfx
+
+    # the web page that will be shown if domain1.com is called
     default:
       destination: http://10.0.0.2:8080
 
+    # additional routes to be accessible via the gateway
     routes:
 
+      # routes can be chained, the children of this entry will be
+      # accessible via domain1.com/admin/
       admin:
 
         routes:
@@ -65,15 +77,21 @@ hosts:
           # domain1.com/admin/pi-hole/
           pi-hole:
             destination: http://10.0.0.3/admin/
+      
+      # provides a simple web UI to browse files within the specified directory
+      # (requires the target path to be available through a volume)
+      # accessible via domain1.com/directory-browsing/
+      directory-browsing:
+        listing: ./
 
-          # domain1.com/admin/files/
-          # directory browsing of files (requires the target path to be available through a volume)
-          files:
-            listing: /app/data
-    
-    security:
-      certificate:
-        pfx: domain1.com.pfx
+      # serves the files within the given directory as static content
+      # (requires the target path to be available through a volume)
+      # accessible via domain1.com/static-content/
+      static-content:
+        
+        content:
+          directory: ./content/
+          index: index.html # optional
 ~~~
 
 ## Volumes

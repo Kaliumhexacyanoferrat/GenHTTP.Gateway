@@ -1,18 +1,14 @@
 ﻿using System;
-
+using System.IO;
 using GenHTTP.Api.Routing;
-
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
-
 using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
 {
-
     public static class Router
     {
-
         public static IRouterBuilder Build(Environment environment, GatewayConfiguration config)
         {
             var hosts = VirtualHosts.Create();
@@ -62,6 +58,23 @@ namespace GenHTTP.Gateway
             {
                 layout.Default(DirectoryListing.From(config.Listing));
             }
+            else if (config.Content != null)
+            {
+                if (config.Content.Directory != null)
+                {
+                    var directory = Static.Files(config.Content.Directory);
+                    
+                    var staticContent = Layout.Create().Default(directory);
+
+                    if (config.Content.Index != null)
+                    {
+                        var indexFile = Path.Combine(config.Content.Directory, config.Content.Index);
+                        layout.Add(config.Content.Index, Download.FromFile(indexFile), true);
+                    }
+
+                    layout.Default(staticContent);
+                }
+            }
 
             if (config.Routes != null)
             {
@@ -79,14 +92,13 @@ namespace GenHTTP.Gateway
             if (config.Destination != null)
             {
                 return ReverseProxy.Create()
-                                   .Upstream(config.Destination)
-                                   .ConnectTimeout(TimeSpan.FromMinutes(3))
-                                   .ReadTimeout(TimeSpan.FromMinutes(3));
+                    .Upstream(config.Destination)
+                    .ConnectTimeout(TimeSpan.FromMinutes(3))
+                    .ReadTimeout(TimeSpan.FromMinutes(3));
             }
 
             return null;
         }
-
     }
-
+    
 }
