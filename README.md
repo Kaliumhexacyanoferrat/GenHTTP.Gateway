@@ -2,7 +2,7 @@
 
 The GenHTTP Gateway provides a simple way to serve all your web applications over a single, HTTPS secured entry point.
 
-[![Build Status](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway.svg?branch=master)](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway)
+[![Build Status](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway.svg?branch=master)](https://travis-ci.com/Kaliumhexacyanoferrat/GenHTTP.Gateway) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GenHTTP.Gateway&metric=ncloc)](https://sonarcloud.io/dashboard?id=GenHTTP.Gateway)
 
 ## Usage
 
