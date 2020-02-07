@@ -18,9 +18,6 @@ addons:
     token:
       secure: $SONAR_TOKEN
 
-install:
-  - git fetch --unshallow --tags
-
 script:
   - dotnet tool restore
   - dotnet sonarscanner begin /k:"GenHTTP.Gateway" /d:sonar.login="$SONAR_TOKEN" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*"
