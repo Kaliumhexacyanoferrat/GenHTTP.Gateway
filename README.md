@@ -1,4 +1,4 @@
-# Introduction
+# GenHTTP Gateway
 
 The GenHTTP Gateway provides a simple way to serve all your web applications over a single, HTTPS secured entry point.
 
