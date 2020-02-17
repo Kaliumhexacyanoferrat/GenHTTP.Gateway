@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 
 using GenHTTP.Api.Infrastructure;
 using GenHTTP.Core;
-
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
 
 namespace GenHTTP.Gateway
 {
 
-    public class Engine
+    public static class Engine
     {
 
         public static IServerHost Setup(Environment environment, GatewayConfiguration config)

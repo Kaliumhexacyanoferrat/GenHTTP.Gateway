@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
+
 using GenHTTP.Api.Modules;
 using GenHTTP.Api.Protocol;
 using GenHTTP.Api.Routing;
+
 using GenHTTP.Modules.Core;
 using GenHTTP.Modules.Core.General;
 
