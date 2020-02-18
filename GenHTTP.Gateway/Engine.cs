@@ -41,7 +41,7 @@ namespace GenHTTP.Gateway
 
         private static bool HasInsecureHosts(this GatewayConfiguration config)
         {
-            return config.Hosts.Values.Any(h => h.Security?.Certificate?.Pfx == null);
+            return config.Hosts?.Values.Any(h => h.Security?.Certificate?.Pfx == null) ?? true;
         }
 
     }
