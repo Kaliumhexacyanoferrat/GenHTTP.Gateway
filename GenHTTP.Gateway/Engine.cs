@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 
 using GenHTTP.Api.Infrastructure;
 using GenHTTP.Core;
@@ -24,6 +25,11 @@ namespace GenHTTP.Gateway
             {
                 server.Bind(IPAddress.Any, 443, certificateProvider)
                       .Bind(IPAddress.IPv6Any, 443, certificateProvider);
+
+                if (config.HasInsecureHosts())
+                {
+                    server.SecureUpgrade(SecureUpgrade.Allow);
+                }
             }
 
 #if DEBUG
@@ -31,6 +37,11 @@ namespace GenHTTP.Gateway
 #endif
 
             return server;
+        }
+
+        private static bool HasInsecureHosts(this GatewayConfiguration config)
+        {
+            return config.Hosts.Values.Any(h => h.Security?.Certificate?.Pfx == null);
         }
 
     }
