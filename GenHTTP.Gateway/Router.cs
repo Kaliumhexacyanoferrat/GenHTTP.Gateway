@@ -25,16 +25,16 @@ namespace GenHTTP.Gateway
             return hosts;
         }
 
-        private static IRouter GetRouter(Environment environment, HostConfiguration config)
+        private static IRouter GetRouter(Environment environment, HostConfiguration? config)
         {
             var layout = Layout.Create();
 
-            if (config.Default != null)
+            if (config?.Default != null)
             {
                 layout.Default(GetRouter(config.Default));
             }
 
-            if (config.Routes != null)
+            if (config?.Routes != null)
             {
                 foreach (var route in config.Routes)
                 {

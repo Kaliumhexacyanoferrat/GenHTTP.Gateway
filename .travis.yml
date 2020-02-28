@@ -22,4 +22,5 @@ script:
   - dotnet tool restore
   - dotnet sonarscanner begin /k:"GenHTTP.Gateway" /d:sonar.login="$SONAR_TOKEN" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*"
   - dotnet build GenHTTP.Gateway.sln -c Release
+  - dotnet test -c Release --no-build GenHTTP.Gateway.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ParallelizeTestCollections=false /p:Exclude=\"[xunit.*]*,[*Tests*]*\" 
   - dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"

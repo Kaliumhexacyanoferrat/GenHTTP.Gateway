@@ -39,7 +39,11 @@ namespace GenHTTP.Gateway.Tests.Domain
         {
             if (Root.Exists)
             {
-                Root.Delete(true);
+                try
+                {
+                    Root.Delete(true);
+                }
+                catch { /* nop */ }
             }
         }
 

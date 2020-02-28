@@ -48,19 +48,19 @@ namespace GenHTTP.Gateway.Tests.Domain
             }
         }
 
-        public static TestRunner Run(string configuration)
+        public static TestRunner Run(string configuration, TestEnvironment? env = null)
         {
             var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
                                                         .Build();
 
-            return Run(deserializer.Deserialize<GatewayConfiguration>(configuration));
+            return Run(deserializer.Deserialize<GatewayConfiguration>(configuration), env);
         }
 
-        public static TestRunner Run(GatewayConfiguration configuration)
+        public static TestRunner Run(GatewayConfiguration configuration, TestEnvironment? env = null)
         {
             var port = NextPort();
 
-            var environment = TestEnvironment.Create();
+            var environment = env ?? TestEnvironment.Create();
 
             var router = Router.Build(environment, configuration);
 
@@ -79,8 +79,11 @@ namespace GenHTTP.Gateway.Tests.Domain
         public HttpWebRequest GetRequest(string? uri = null)
         {
             var request = WebRequest.CreateHttp($"http://localhost:{Port}{uri ?? ""}");
-            request.Timeout = 3000;
             request.AllowAutoRedirect = false;
+
+#if DEBUG
+            request.Timeout = 3000;
+#endif
 
             return request;
         }

@@ -7,7 +7,7 @@ using Xunit;
 namespace GenHTTP.Gateway.Tests
 {
 
-    public class ReverseProxyTests
+    public class UpstreamTests
     {
 
         [Fact]

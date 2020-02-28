@@ -20,7 +20,7 @@ namespace GenHTTP.Gateway.Security
             {
                 foreach (var host in config.Hosts)
                 {
-                    var cert = host.Value.Security?.Certificate;
+                    var cert = host.Value?.Security?.Certificate;
 
                     if (cert != null)
                     {
