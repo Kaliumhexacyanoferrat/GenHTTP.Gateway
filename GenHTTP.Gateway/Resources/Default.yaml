@@ -41,8 +41,10 @@
       # serves the files within the given directory as static content
       # (requires the target path to be available through a volume)
       # accessible via domain1.com/static-content/
-      static-content:
-        
-        content:
-          directory: ./content/
-          index: index.html # optional
+      
+      #
+      # static-content:
+      #  
+      #  content:
+      #    directory: ./content/
+      #    index: index.html # optional
