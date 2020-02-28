@@ -21,7 +21,7 @@ namespace GenHTTP.Gateway
                          .Run();
         }
 
-        private static GatewayConfiguration SetupConfig(Environment env)
+        public static GatewayConfiguration SetupConfig(Environment env)
         {
             var configFile = Path.Combine(env.Config, "gateway.yaml");
 

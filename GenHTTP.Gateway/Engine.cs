@@ -12,19 +12,20 @@ namespace GenHTTP.Gateway
     public static class Engine
     {
 
-        public static IServerHost Setup(Environment environment, GatewayConfiguration config)
+        public static IServerHost Setup(Environment environment, GatewayConfiguration config,
+                                        ushort port = 80, ushort securePort = 443)
         {
             var server = Host.Create()
-                             .Bind(IPAddress.Any, 80)
-                             .Bind(IPAddress.IPv6Any, 80)
+                             .Bind(IPAddress.Any, port)
+                             .Bind(IPAddress.IPv6Any, port)
                              .Console();
 
             var certificateProvider = CertificateLoader.GetProvider(environment, config);
 
             if (certificateProvider != null)
             {
-                server.Bind(IPAddress.Any, 443, certificateProvider)
-                      .Bind(IPAddress.IPv6Any, 443, certificateProvider);
+                server.Bind(IPAddress.Any, securePort, certificateProvider)
+                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
 
                 if (config.HasInsecureHosts())
                 {
