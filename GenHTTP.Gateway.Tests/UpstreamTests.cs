@@ -1,8 +1,6 @@
-﻿using GenHTTP.Gateway.Configuration;
-using GenHTTP.Gateway.Tests.Domain;
-using System.Collections.Generic;
+﻿using Xunit;
 
-using Xunit;
+using GenHTTP.Gateway.Tests.Domain;
 
 namespace GenHTTP.Gateway.Tests
 {

@@ -1,7 +1,4 @@
 ﻿using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Xunit;
 
@@ -9,7 +6,7 @@ using GenHTTP.Gateway.Tests.Domain;
 
 namespace GenHTTP.Gateway.Tests
 {
-    
+
     public class ContentTests
     {
 
