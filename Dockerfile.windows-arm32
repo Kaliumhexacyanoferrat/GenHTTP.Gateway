@@ -1,22 +1,26 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1809 AS build
-WORKDIR /App
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /Source
 
 # copy csproj and restore as distinct layers
-COPY GenHTTP.Gateway/*.csproj ./Gateway/
-WORKDIR /App/Gateway
-RUN dotnet restore
+COPY GenHTTP.Gateway/*.csproj .
+RUN dotnet restore -r win-arm
 
-# copy and build app and libraries
-WORKDIR /App/
-COPY GenHTTP.Gateway/. ./Gateway/
-WORKDIR /App/Gateway
-RUN dotnet publish -c Release -r win10-arm -o out --self-contained true /p:PublishTrimmed=true
+# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
+# https://github.com/dotnet/dotnet-docker/issues/1054
+USER ContainerAdministrator
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7 AS runtime
-ENV DOCKER_FLAVOR=windows
+# copy and publish app and libraries
+COPY GenHTTP.Gateway/ .
+RUN dotnet publish -c release -o /App -r win-arm --self-contained true --no-restore /p:PublishTrimmed=true
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7
 WORKDIR /App
-COPY --from=build /App/Gateway/out ./
-ENTRYPOINT ["C:/App/GenHTTP.Gateway.exe"]
+COPY --from=build /App .
+
+ENTRYPOINT ["GenHTTP.Gateway.exe"]
+
+ENV DOCKER_FLAVOR=windows
 
 VOLUME ["C:/App/Data", "C:/App/Certs", "C:/App/Config"]
 

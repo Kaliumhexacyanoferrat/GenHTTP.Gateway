@@ -1,22 +1,22 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1909 AS build
-WORKDIR /App
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /Source
 
 # copy csproj and restore as distinct layers
-COPY GenHTTP.Gateway/*.csproj ./Gateway/
-WORKDIR /App/Gateway
-RUN dotnet restore
+COPY GenHTTP.Gateway/*.csproj .
+RUN dotnet restore -r win-x64
 
-# copy and build app and libraries
-WORKDIR /App/
-COPY GenHTTP.Gateway/. ./Gateway/
-WORKDIR /App/Gateway
-RUN dotnet publish -c Release -r win10-x64 -o out --self-contained true /p:PublishTrimmed=true
+# copy and publish app and libraries
+COPY GenHTTP.Gateway/ .
+RUN dotnet publish -c release -o /App -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909 AS runtime
-ENV DOCKER_FLAVOR=windows
+# final stage/image
+FROM mcr.microsoft.com/windows/nanoserver:1909
 WORKDIR /App
-COPY --from=build /App/Gateway/out ./
-ENTRYPOINT ["C:/App/GenHTTP.Gateway.exe"]
+COPY --from=build /App .
+
+ENTRYPOINT ["GenHTTP.Gateway.exe"]
+
+ENV DOCKER_FLAVOR=windows
 
 VOLUME ["C:/App/Data", "C:/App/Certs", "C:/App/Config"]
 

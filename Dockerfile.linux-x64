@@ -1,22 +1,22 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
-WORKDIR /app
+WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY GenHTTP.Gateway/*.csproj ./gateway/
-WORKDIR /app/gateway
-RUN dotnet restore
+COPY GenHTTP.Gateway/*.csproj .
+RUN dotnet restore -r linux-musl-x64
 
-# copy and build app and libraries
-WORKDIR /app/
-COPY GenHTTP.Gateway/. ./gateway/
-WORKDIR /app/gateway
-RUN dotnet publish -c Release -r linux-musl-x64 -o out --self-contained true /p:PublishTrimmed=true
+# copy and publish app and libraries
+COPY GenHTTP.Gateway/ .
+RUN dotnet publish -c release -o /app -r linux-musl-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
 
-FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine AS runtime
-ENV DOCKER_FLAVOR=linux
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine
 WORKDIR /app
-COPY --from=build /app/gateway/out ./
+COPY --from=build /app .
+
 ENTRYPOINT ["./GenHTTP.Gateway"]
+
+ENV DOCKER_FLAVOR=linux
 
 VOLUME ["/app/data", "/app/certs", "/app/config"]
 

@@ -4,11 +4,12 @@
 
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <RuntimeIdentifiers>linux-musl-x64</RuntimeIdentifiers>
+    
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    
+
     <ServerGarbageCollection>true</ServerGarbageCollection>
 
   </PropertyGroup>
@@ -23,9 +24,9 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="GenHTTP.Core" Version="2.8.1" />
-    <PackageReference Include="YamlDotNet" Version="8.1.0" />
+  <ItemGroup>    
+    <PackageReference Include="GenHTTP.Core" Version="2.8.1" />    
+    <PackageReference Include="YamlDotNet" Version="8.1.0" />    
   </ItemGroup>
 
   <ItemGroup>

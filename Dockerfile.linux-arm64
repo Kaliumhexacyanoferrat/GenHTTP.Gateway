@@ -3,14 +3,14 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY GenHTTP.Gateway/*.csproj .
-RUN dotnet restore -r linux-arm
+RUN dotnet restore -r linux-arm64
 
 # copy and publish app and libraries
 COPY GenHTTP.Gateway/ .
-RUN dotnet publish -c release -o /app -r linux-arm --self-contained true --no-restore /p:PublishTrimmed=true
+RUN dotnet publish -c release -o /app -r linux-arm64 --self-contained true --no-restore /p:PublishTrimmed=true
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm32v7
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm64v8
 WORKDIR /app
 COPY --from=build /app .
 
