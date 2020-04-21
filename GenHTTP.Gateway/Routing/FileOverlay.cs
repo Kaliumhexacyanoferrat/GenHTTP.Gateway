@@ -1,72 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
-using GenHTTP.Api.Modules;
+using GenHTTP.Api.Content;
 using GenHTTP.Api.Protocol;
-using GenHTTP.Api.Routing;
 
 using GenHTTP.Modules.Core;
-using GenHTTP.Modules.Core.General;
 
 namespace GenHTTP.Gateway.Routing
 {
 
     /// <summary>
-    /// Blends the data directory over the actual router used for
+    /// Blends the data directory over the actual handler used for
     /// a virtual host.
     /// </summary>
     /// <remarks>
     /// This way, content from the data directory can be served
     /// without exluding files from being handled by virtual hosts.
     /// </remarks>
-    public class FileOverlay : RouterBase
+    public class FileOverlay : IConcern
     {
 
         #region Get-/Setters
 
-        public IRouter Inner { get; }
+        public IHandler Content { get; }
 
-        public IRouter Overlay { get; }
-        
+        public IHandler Parent { get; }
+
+        public IHandler Overlay { get; }
+
         public string DataDirectory { get; }
 
         #endregion
 
         #region Initialization
 
-        public FileOverlay(Environment environment, IRouter inner) : base(null, null)
+        public FileOverlay(IHandler parent, Func<IHandler, IHandler> contentFactory, Environment environment)
         {
-            Inner = inner;
-            inner.Parent = this;
+            Parent = parent;
 
             DataDirectory = new DirectoryInfo(environment.Data).FullName;
-            Overlay = Static.Files(environment.Data).Build();
+
+            Overlay = Static.Files(environment.Data)
+                            .Build(this);
+
+            Content = contentFactory(this);
         }
 
         #endregion
 
         #region Functionality
 
-        public override void HandleContext(IEditableRoutingContext current)
-        {
-            var target = Path.Combine(DataDirectory, current.Request.Path.Substring(1));
+        public IEnumerable<ContentElement> GetContent(IRequest request) => Content.GetContent(request);
 
-            if (File.Exists(target) && target.StartsWith(DataDirectory))
-            {
-                Overlay.HandleContext(current);
-            }
-            else
-            {
-                Inner.HandleContext(current);
-            }
-        }
-
-        public override IEnumerable<ContentElement> GetContent(IRequest request, string basePath) => Inner.GetContent(request, basePath);
-
-        public override string? Route(string path, int currentDepth)
-        {
-            return Parent.Route(path, currentDepth);
-        }
+        public IResponse? Handle(IRequest request) => Overlay.Handle(request) ?? Content.Handle(request);
 
         #endregion
 

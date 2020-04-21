@@ -1,7 +1,8 @@
 ﻿using System;
 
+using GenHTTP.Api.Content;
 using GenHTTP.Api.Infrastructure;
-using GenHTTP.Api.Routing;
+
 using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway.Tests.Domain
@@ -20,11 +21,11 @@ namespace GenHTTP.Gateway.Tests.Domain
 
         #region Initialization
 
-        protected Upstream(ushort port, IRouterBuilder router)
+        protected Upstream(ushort port, IHandlerBuilder handler)
         {
             Host = Core.Host.Create()
                             .Port(port)
-                            .Router(router)
+                            .Handler(handler)
                             .Start();
 
             Port = port;
@@ -33,14 +34,14 @@ namespace GenHTTP.Gateway.Tests.Domain
         public static Upstream Create(string content)
         {
             var router = Layout.Create()
-                               .Default(Content.From(content));
+                               .Fallback(Content.From(content));
 
             return Create(router);
         }
 
-        public static Upstream Create(IRouterBuilder router)
+        public static Upstream Create(IHandlerBuilder handler)
         {
-            return new Upstream(TestRunner.NextPort(), router);
+            return new Upstream(TestRunner.NextPort(), handler);
         }
 
         #endregion

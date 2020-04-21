@@ -24,8 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>    
-    <PackageReference Include="GenHTTP.Core" Version="2.10.2" />    
-    <PackageReference Include="YamlDotNet" Version="8.1.0" />    
+    
+    <PackageReference Include="GenHTTP.Core" Version="3.0.0" />
+    <PackageReference Include="YamlDotNet" Version="8.1.0" />
+    
   </ItemGroup>
 
   <ItemGroup>

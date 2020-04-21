@@ -3,8 +3,10 @@ using System.Net;
 
 using GenHTTP.Api.Infrastructure;
 using GenHTTP.Core;
+
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
+using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
 {
@@ -18,6 +20,7 @@ namespace GenHTTP.Gateway
             var server = Host.Create()
                              .Bind(IPAddress.Any, port)
                              .Bind(IPAddress.IPv6Any, port)
+                             .Defaults(secureUpgrade: false)
                              .Console();
 
             var certificateProvider = CertificateLoader.GetProvider(environment, config);
@@ -27,10 +30,7 @@ namespace GenHTTP.Gateway
                 server.Bind(IPAddress.Any, securePort, certificateProvider)
                       .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
 
-                if (config.HasInsecureHosts())
-                {
-                    server.SecureUpgrade(SecureUpgrade.Allow);
-                }
+                server.SecureUpgrade(config.HasInsecureHosts() ? SecureUpgrade.Allow : SecureUpgrade.Force);
             }
 
 #if DEBUG

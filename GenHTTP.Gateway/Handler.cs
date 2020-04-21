@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
 
-using GenHTTP.Api.Routing;
+using GenHTTP.Api.Content;
+using GenHTTP.Modules.Core;
+
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
-using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
 {
-    public static class Router
+
+    public static class Handler
     {
-        public static IRouterBuilder Build(Environment environment, GatewayConfiguration config)
+
+        public static IHandlerBuilder Build(Environment environment, GatewayConfiguration config)
         {
             var hosts = VirtualHosts.Create();
 
@@ -18,34 +21,35 @@ namespace GenHTTP.Gateway
             {
                 foreach (var host in config.Hosts)
                 {
-                    hosts.Add(host.Key, GetRouter(environment, host.Value));
+                    hosts.Add(host.Key, GetHandler(environment, host.Value));
                 }
             }
 
             return hosts;
         }
 
-        private static IRouter GetRouter(Environment environment, HostConfiguration? config)
+        private static IHandlerBuilder GetHandler(Environment environment, HostConfiguration? config)
         {
-            var layout = Layout.Create();
+            var layout = Layout.Create()
+                               .Add(new FileOverlayBuilder(environment));
 
             if (config?.Default != null)
             {
-                layout.Default(GetRouter(config.Default));
+                layout.Fallback(GetHandler(config.Default));
             }
 
             if (config?.Routes != null)
             {
                 foreach (var route in config.Routes)
                 {
-                    layout.Add(route.Key, GetRouter(route.Value));
+                    layout.Add(route.Key, GetHandler(route.Value));
                 }
             }
 
-            return new FileOverlay(environment, layout.Build());
+            return layout;
         }
 
-        private static IRouterBuilder GetRouter(RouteConfiguration config)
+        private static IHandlerBuilder GetHandler(RouteConfiguration config)
         {
             var layout = Layout.Create();
 
@@ -53,11 +57,11 @@ namespace GenHTTP.Gateway
 
             if (content != null)
             {
-                layout.Default(content);
+                layout.Fallback(content);
             }
             else if (config.Listing != null)
             {
-                layout.Default(DirectoryListing.From(config.Listing));
+                layout.Fallback(DirectoryListing.From(config.Listing));
             }
             else if (config.Content != null)
             {
@@ -65,15 +69,15 @@ namespace GenHTTP.Gateway
                 {
                     var directory = Static.Files(config.Content.Directory);
                     
-                    var staticContent = Layout.Create().Default(directory);
+                    var staticContent = Layout.Create().Fallback(directory);
 
                     if (config.Content.Index != null)
                     {
                         var indexFile = Path.Combine(config.Content.Directory, config.Content.Index);
-                        layout.Add(config.Content.Index, Download.FromFile(indexFile), true);
+                        layout.Index(Download.FromFile(indexFile));
                     }
 
-                    layout.Default(staticContent);
+                    layout.Fallback(staticContent);
                 }
             }
 
@@ -81,21 +85,21 @@ namespace GenHTTP.Gateway
             {
                 foreach (var route in config.Routes)
                 {
-                    layout.Add(route.Key, GetRouter(route.Value));
+                    layout.Add(route.Key, GetHandler(route.Value));
                 }
             }
 
             return layout;
         }
 
-        private static IRouterBuilder? GetContent(RouteConfiguration config)
+        private static IHandlerBuilder? GetContent(RouteConfiguration config)
         {
             if (config.Destination != null)
             {
                 return ReverseProxy.Create()
-                    .Upstream(config.Destination)
-                    .ConnectTimeout(TimeSpan.FromMinutes(3))
-                    .ReadTimeout(TimeSpan.FromMinutes(3));
+                                   .Upstream(config.Destination)
+                                   .ConnectTimeout(TimeSpan.FromMinutes(3))
+                                   .ReadTimeout(TimeSpan.FromMinutes(3));
             }
 
             return null;

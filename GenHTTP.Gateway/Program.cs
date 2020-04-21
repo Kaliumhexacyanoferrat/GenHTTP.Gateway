@@ -14,10 +14,10 @@ namespace GenHTTP.Gateway
 
             var config = SetupConfig(env);
 
-            var router = Router.Build(env, config);
+            var handler = Handler.Build(env, config);
 
             return Engine.Setup(env, config)
-                         .Router(router)
+                         .Handler(handler)
                          .Run();
         }
 

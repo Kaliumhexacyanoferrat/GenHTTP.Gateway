@@ -62,10 +62,10 @@ namespace GenHTTP.Gateway.Tests.Domain
 
             var environment = env ?? TestEnvironment.Create();
 
-            var router = Router.Build(environment, configuration);
+            var handler = Handler.Build(environment, configuration);
 
             var host = Engine.Setup(environment, configuration, port)
-                             .Router(router);
+                             .Handler(handler);
 
             host.Start();
 
