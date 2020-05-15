@@ -30,6 +30,7 @@ namespace GenHTTP.Gateway.Tests
                         stream.CopyTo(cert);
                     }
                 }
+
                 var config = @$"
 hosts:
   localhost:

@@ -6,6 +6,8 @@ using GenHTTP.Modules.Core;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
+using GenHTTP.Api.Infrastructure;
+using GenHTTP.Modules.Core.Security;
 
 namespace GenHTTP.Gateway
 {
@@ -44,6 +46,11 @@ namespace GenHTTP.Gateway
                 {
                     layout.Add(route.Key, GetHandler(route.Value));
                 }
+            }
+
+            if (config?.Security?.Certificate != null)
+            {
+                layout.Add(new SecureUpgradeConcernBuilder().Mode(SecureUpgrade.Force));
             }
 
             return layout;
