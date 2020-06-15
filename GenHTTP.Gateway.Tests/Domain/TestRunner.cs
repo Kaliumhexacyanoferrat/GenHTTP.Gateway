@@ -64,8 +64,7 @@ namespace GenHTTP.Gateway.Tests.Domain
 
             var handler = Handler.Build(environment, configuration);
 
-            var host = Engine.Setup(environment, configuration, port)
-                             .Handler(handler);
+            var host = Engine.CreateHost(handler, null, port);
 
             host.Start();
 

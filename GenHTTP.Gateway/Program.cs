@@ -1,6 +1,7 @@
 ﻿using System.IO;
 
 using GenHTTP.Gateway.Configuration;
+using GenHTTP.Gateway.Security;
 
 namespace GenHTTP.Gateway
 {
@@ -14,11 +15,7 @@ namespace GenHTTP.Gateway
 
             var config = SetupConfig(env);
 
-            var handler = Handler.Build(env, config);
-
-            return Engine.Setup(env, config)
-                         .Handler(handler)
-                         .Run();
+            return new Engine(env, config).Run();
         }
 
         public static GatewayConfiguration SetupConfig(Environment env)

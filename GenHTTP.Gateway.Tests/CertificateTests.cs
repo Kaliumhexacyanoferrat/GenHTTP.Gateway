@@ -40,13 +40,13 @@ hosts:
 
                 var parsed = GetConfiguration(config);
 
-                var provider = CertificateLoader.GetProvider(environment, parsed);
+                var provider = new CertificateProvider(environment, parsed);
 
                 Assert.NotNull(provider?.Provide("localhost"));
 
                 Assert.Null(provider?.Provide("anotherhost"));
 
-                Engine.Setup(environment, parsed);
+                Engine.CreateHost(Handler.Build(environment, parsed), provider);
             }
             finally
             {
