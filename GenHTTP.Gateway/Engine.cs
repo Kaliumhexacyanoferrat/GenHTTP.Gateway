@@ -1,8 +1,7 @@
 ﻿using System.Net;
 
+using GenHTTP.Api.Content;
 using GenHTTP.Api.Infrastructure;
-using GenHTTP.Core;
-
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
 using GenHTTP.Modules.Core;
@@ -10,24 +9,42 @@ using GenHTTP.Modules.Core;
 namespace GenHTTP.Gateway
 {
 
-    public static class Engine
+    public class Engine
     {
 
-        public static IServerHost Setup(Environment environment, GatewayConfiguration config,
-                                        ushort port = 80, ushort securePort = 443)
-        {
-            var server = Host.Create()
-                             .Bind(IPAddress.Any, port)
-                             .Bind(IPAddress.IPv6Any, port)
-                             .Defaults(secureUpgrade: false)
-                             .Console();
+        #region Get-/Setters
 
-            var certificateProvider = CertificateLoader.GetProvider(environment, config);
+        public IServerHost Host { get; }
+
+        public CertificateProvider? CertificateProvider { get; }
+
+        #endregion
+
+        #region Initialization
+
+        public Engine(Environment environment, GatewayConfiguration configuration)
+        {
+            var handler = Handler.Build(environment, configuration);
+
+            var certificateProvider = new CertificateProvider(environment, configuration);
+
+            Host = CreateHost(handler, certificateProvider);
+        }
+
+        public static IServerHost CreateHost(IHandlerBuilder handler, CertificateProvider? certificateProvider,
+                                             ushort port = 80, ushort securePort = 443)
+        {
+            var server = Core.Host.Create()
+                                  .Bind(IPAddress.Any, port)
+                                  .Bind(IPAddress.IPv6Any, port)
+                                  .Handler(handler)
+                                  .Defaults(secureUpgrade: false)
+                                  .Console();
 
             if (certificateProvider != null)
             {
-                server.Bind(IPAddress.Any, securePort, certificateProvider)
-                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
+                server.Bind(IPAddress.Any, securePort, certificateProvider);
+                server.Bind(IPAddress.IPv6Any, securePort, certificateProvider);
             }
 
 #if DEBUG
@@ -36,6 +53,14 @@ namespace GenHTTP.Gateway
 
             return server;
         }
+
+        #endregion
+
+        #region Functionality
+
+        public int Run() => Host.Run();
+
+        #endregion
 
     }
 
