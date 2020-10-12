@@ -1,11 +1,12 @@
 ﻿using System.Net;
 
 using GenHTTP.Api.Infrastructure;
-using GenHTTP.Core;
+
+using GenHTTP.Engine;
+using GenHTTP.Modules.Practices;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
-using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway
 {

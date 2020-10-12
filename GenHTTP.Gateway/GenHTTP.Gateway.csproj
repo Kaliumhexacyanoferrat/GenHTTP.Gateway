@@ -25,7 +25,13 @@
 
   <ItemGroup>    
     
-    <PackageReference Include="GenHTTP.Core" Version="3.2.2" />
+    <PackageReference Include="GenHTTP.Core" Version="4.0.0" />    
+    
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="4.0.0" />    
+    
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="4.0.0" />    
+    
+    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="4.0.0" />
     <PackageReference Include="YamlDotNet" Version="8.1.2" />
     
   </ItemGroup>

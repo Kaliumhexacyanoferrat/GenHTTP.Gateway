@@ -2,12 +2,17 @@
 using System.IO;
 
 using GenHTTP.Api.Content;
-using GenHTTP.Modules.Core;
+using GenHTTP.Api.Infrastructure;
+
+using GenHTTP.Modules.VirtualHosting;
+using GenHTTP.Modules.Layouting;
+using GenHTTP.Modules.Security.Providers;
+using GenHTTP.Modules.DirectoryBrowsing;
+using GenHTTP.Modules.IO;
+using GenHTTP.Modules.ReverseProxy;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
-using GenHTTP.Api.Infrastructure;
-using GenHTTP.Modules.Core.Security;
 
 namespace GenHTTP.Gateway
 {
@@ -103,10 +108,10 @@ namespace GenHTTP.Gateway
         {
             if (config.Destination != null)
             {
-                return ReverseProxy.Create()
-                                   .Upstream(config.Destination)
-                                   .ConnectTimeout(TimeSpan.FromMinutes(3))
-                                   .ReadTimeout(TimeSpan.FromMinutes(3));
+                return Proxy.Create()
+                            .Upstream(config.Destination)
+                            .ConnectTimeout(TimeSpan.FromMinutes(3))
+                            .ReadTimeout(TimeSpan.FromMinutes(3));
             }
 
             return null;

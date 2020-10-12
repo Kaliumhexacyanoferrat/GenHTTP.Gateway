@@ -5,10 +5,11 @@ using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
+using GenHTTP.Modules.IO;
+
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
 using GenHTTP.Gateway.Tests.Domain;
-using GenHTTP.Modules.Core;
 
 namespace GenHTTP.Gateway.Tests
 {

@@ -3,7 +3,8 @@
 using GenHTTP.Api.Content;
 using GenHTTP.Api.Infrastructure;
 
-using GenHTTP.Modules.Core;
+using GenHTTP.Modules.IO;
+using GenHTTP.Modules.Layouting;
 
 namespace GenHTTP.Gateway.Tests.Domain
 {
@@ -23,10 +24,10 @@ namespace GenHTTP.Gateway.Tests.Domain
 
         protected Upstream(ushort port, IHandlerBuilder handler)
         {
-            Host = Core.Host.Create()
-                            .Port(port)
-                            .Handler(handler)
-                            .Start();
+            Host = GenHTTP.Engine.Host.Create()
+                                      .Port(port)
+                                      .Handler(handler)
+                                      .Start();
 
             Port = port;
         }
