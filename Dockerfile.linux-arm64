@@ -10,7 +10,7 @@ COPY GenHTTP.Gateway/ .
 RUN dotnet publish -c release -o /app -r linux-arm64 --self-contained true --no-restore /p:PublishTrimmed=true
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm64v8
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine-arm64v8
 WORKDIR /app
 COPY --from=build /app .
 
