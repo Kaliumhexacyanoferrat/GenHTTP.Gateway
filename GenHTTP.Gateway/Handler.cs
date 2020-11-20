@@ -73,20 +73,20 @@ namespace GenHTTP.Gateway
             }
             else if (config.Listing != null)
             {
-                layout.Fallback(DirectoryListing.From(config.Listing));
+                layout.Fallback(Listing.From(ResourceTree.FromDirectory(config.Listing)));
             }
             else if (config.Content != null)
             {
                 if (config.Content.Directory != null)
                 {
-                    var directory = Static.Files(config.Content.Directory);
+                    var directory = Resources.From(ResourceTree.FromDirectory(config.Content.Directory));
                     
                     var staticContent = Layout.Create().Fallback(directory);
 
                     if (config.Content.Index != null)
                     {
                         var indexFile = Path.Combine(config.Content.Directory, config.Content.Index);
-                        layout.Index(Download.FromFile(indexFile));
+                        layout.Index(Download.From(Resource.FromFile(indexFile)));
                     }
 
                     layout.Fallback(staticContent);

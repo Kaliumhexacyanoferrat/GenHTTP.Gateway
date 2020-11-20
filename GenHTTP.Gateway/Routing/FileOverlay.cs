@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 using GenHTTP.Api.Content;
 using GenHTTP.Api.Protocol;
-
 using GenHTTP.Modules.IO;
 
 namespace GenHTTP.Gateway.Routing
@@ -41,8 +41,8 @@ namespace GenHTTP.Gateway.Routing
 
             DataDirectory = new DirectoryInfo(environment.Data).FullName;
 
-            Overlay = Static.Files(environment.Data)
-                            .Build(this);
+            Overlay = Resources.From(ResourceTree.FromDirectory(environment.Data))
+                               .Build(this);
 
             Content = contentFactory(this);
         }
@@ -53,7 +53,7 @@ namespace GenHTTP.Gateway.Routing
 
         public IEnumerable<ContentElement> GetContent(IRequest request) => Content.GetContent(request);
 
-        public IResponse? Handle(IRequest request) => Overlay.Handle(request) ?? Content.Handle(request);
+        public async ValueTask<IResponse?> HandleAsync(IRequest request) => await Overlay.HandleAsync(request) ?? await Content.HandleAsync(request);
 
         #endregion
 

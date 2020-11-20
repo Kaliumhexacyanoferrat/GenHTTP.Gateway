@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 using Xunit;
 
@@ -18,13 +19,13 @@ namespace GenHTTP.Gateway.Tests
     {
 
         [Fact]
-        public void TestLoader()
+        public async Task TestLoader()
         {
             var environment = TestEnvironment.Create();
 
             try
             {
-                using (var stream = Data.FromResource("Certificate.pfx").Build().GetResource())
+                using (var stream = await Resource.FromAssembly("Certificate.pfx").Build().GetContentAsync())
                 {
                     using (var cert = File.OpenWrite(Path.Combine(environment.Certificates, "host.pfx")))
                     {
