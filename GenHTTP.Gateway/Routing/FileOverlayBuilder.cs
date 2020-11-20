@@ -1,7 +1,6 @@
-﻿using GenHTTP.Api.Content;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+
+using GenHTTP.Api.Content;
 
 namespace GenHTTP.Gateway.Routing
 {
