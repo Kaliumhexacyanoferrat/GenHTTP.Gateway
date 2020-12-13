@@ -55,6 +55,12 @@ namespace GenHTTP.Gateway.Routing
 
         public async ValueTask<IResponse?> HandleAsync(IRequest request) => await Overlay.HandleAsync(request) ?? await Content.HandleAsync(request);
 
+        public async ValueTask PrepareAsync()
+        {
+            await Content.PrepareAsync();
+            await Overlay.PrepareAsync();
+        }
+
         #endregion
 
     }
