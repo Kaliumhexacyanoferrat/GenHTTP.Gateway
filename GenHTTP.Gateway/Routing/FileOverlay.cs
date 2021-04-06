@@ -4,7 +4,9 @@ using System.IO;
 using System.Threading.Tasks;
 
 using GenHTTP.Api.Content;
+using GenHTTP.Api.Content.IO;
 using GenHTTP.Api.Protocol;
+
 using GenHTTP.Modules.IO;
 
 namespace GenHTTP.Gateway.Routing
@@ -53,7 +55,17 @@ namespace GenHTTP.Gateway.Routing
 
         public IEnumerable<ContentElement> GetContent(IRequest request) => Content.GetContent(request);
 
-        public async ValueTask<IResponse?> HandleAsync(IRequest request) => await Overlay.HandleAsync(request) ?? await Content.HandleAsync(request);
+        public async ValueTask<IResponse?> HandleAsync(IRequest request)
+        {
+            var targetFile = Path.Combine(DataDirectory, "." + request.Target.Path.ToString(false));
+
+            if (File.Exists(targetFile))
+            { 
+                return await Overlay.HandleAsync(request);
+            }
+
+            return await Content.HandleAsync(request);
+        }
 
         public async ValueTask PrepareAsync()
         {
