@@ -2,7 +2,7 @@
 
 The GenHTTP Gateway provides a simple way to serve all your web applications over a single, HTTPS secured entry point. Compared to other reverse-proxy solutions such as [Traefik](https://github.com/containous/traefik), the gateway provides less features but is easier to configure for scenarios such as home servers.
 
-![CI](https://github.com/Kaliumhexacyanoferrat/GenHTTP.Gateway/workflows/CI/badge.svg) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GenHTTP.Gateway&metric=coverage)](https://sonarcloud.io/dashboard?id=GenHTTP.Gateway) ![Docker](https://img.shields.io/docker/pulls/genhttp/gateway.svg)
+![CI](https://github.com/Kaliumhexacyanoferrat/GenHTTP.Gateway/workflows/CI/badge.svg) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GenHTTP.Gateway&metric=coverage)](https://sonarcloud.io/dashboard?id=GenHTTP.Gateway) [![Docker](https://img.shields.io/docker/pulls/genhttp/gateway.svg)](https://hub.docker.com/r/genhttp/gateway)
 
 ## Usage
 
