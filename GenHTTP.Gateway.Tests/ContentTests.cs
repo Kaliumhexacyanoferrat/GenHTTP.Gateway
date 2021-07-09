@@ -1,16 +1,17 @@
 ﻿using System.IO;
 
-using Xunit;
-
 using GenHTTP.Gateway.Tests.Domain;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenHTTP.Gateway.Tests
 {
 
+    [TestClass]
     public class ContentTests
     {
 
-        [Fact]
+        [TestMethod]
         public void TestStaticContent()
         {
             var environment = TestEnvironment.Create();
@@ -31,7 +32,7 @@ hosts:
 
                 using var response = runner.GetResponse();
 
-                Assert.Equal("Hello World!", response.GetContent());
+                Assert.AreEqual("Hello World!", response.GetContent());
             }
             finally
             {

@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.102
+        dotnet-version: 5.0.301
     - name: Setup Java JDK
       uses: actions/setup-java@v1
       with:
@@ -33,7 +33,7 @@ jobs:
     - name: Build project
       run: dotnet build GenHTTP.Gateway.sln -c Release
     - name: Test project
-      run: dotnet test -c Release --no-build GenHTTP.Gateway.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ParallelizeTestCollections=false /p:Exclude=\"[xunit.*]*,[*Tests*]*\" 
+      run: dotnet test -c Release --no-build GenHTTP.Gateway.sln --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
     - name: End scan
       if: env.SONAR_TOKEN != null && env.SONAR_TOKEN != ''
       run: dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"

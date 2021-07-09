@@ -2,15 +2,16 @@
 
 using GenHTTP.Gateway.Tests.Domain;
 
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenHTTP.Gateway.Tests
 {
 
+    [TestClass]
     public class DirectoryBrowsingTests
     {
 
-        [Fact]
+        [TestMethod]
         public void TestListing()
         {
             var environment = TestEnvironment.Create();
@@ -29,7 +30,7 @@ hosts:
 
                 using var response = runner.GetResponse();
 
-                Assert.Contains("hey.txt", response.GetContent());
+                Assert.IsTrue(response.GetContent().Contains("hey.txt"));
             }
             finally
             {

@@ -1,17 +1,18 @@
 ﻿using System.IO;
 using System.Net;
 
-using Xunit;
-
 using GenHTTP.Gateway.Tests.Domain;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenHTTP.Gateway.Tests
 {
 
+    [TestClass]
     public class BasicTests
     {
 
-        [Fact]
+        [TestMethod]
         public void TestOverlay()
         {
             var config = @$"
@@ -24,10 +25,10 @@ hosts:
 
             using var response = runner.GetResponse("/file.txt");
 
-            Assert.Equal("Hello World!", response.GetContent());
+            Assert.AreEqual("Hello World!", response.GetContent());
         }
 
-        [Fact]
+        [TestMethod]
         public void TestNotFound()
         {
             var config = @$"
@@ -38,10 +39,10 @@ hosts:
 
             using var response = runner.GetResponse("/notfound");
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestInitialization()
         {
             var environment = TestEnvironment.Create();
@@ -50,9 +51,9 @@ hosts:
             {
                 var config = Program.SetupConfig(environment);
 
-                Assert.True(File.Exists(Path.Combine(environment.Config, "gateway.yaml")));
+                Assert.IsTrue(File.Exists(Path.Combine(environment.Config, "gateway.yaml")));
 
-                Assert.True(Directory.Exists(Path.Combine(environment.Data, ".well-known")));
+                Assert.IsTrue(Directory.Exists(Path.Combine(environment.Data, ".well-known")));
             }
             finally
             {
