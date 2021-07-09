@@ -1,16 +1,18 @@
-﻿using Xunit;
+﻿using System.IO;
 
 using GenHTTP.Gateway.Tests.Domain;
 using GenHTTP.Modules.IO;
-using System.IO;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenHTTP.Gateway.Tests
 {
 
+    [TestClass]
     public class UpstreamTests
     {
 
-        [Fact]
+        [TestMethod]
         public void TestDefault()
         {
             using var defaultUpstream = Upstream.Create("default");
@@ -30,14 +32,14 @@ hosts:
 
             using var defaultResponse = runner.GetResponse();
 
-            Assert.Equal("default", defaultResponse.GetContent());
+            Assert.AreEqual("default", defaultResponse.GetContent());
 
             using var routeResponse = runner.GetResponse("/route/");
 
-            Assert.Equal("route", routeResponse.GetContent());
+            Assert.AreEqual("route", routeResponse.GetContent());
         }
 
-        [Fact]
+        [TestMethod]
         public void TestWellKnown()
         {
             var handler = InlineHandlerBuilder.Create(async (h, r) =>
@@ -55,11 +57,11 @@ hosts:
 
             using var runner = TestRunner.Run(config);
 
-            Directory.CreateDirectory(Path.Combine(runner.Environment.Data, ".well-known")); 
+            Directory.CreateDirectory(Path.Combine(runner.Environment.Data, ".well-known"));
 
             using var defaultResponse = runner.GetResponse("/.well-known/caldav");
 
-            Assert.Equal("/.well-known/caldav", defaultResponse.GetContent());
+            Assert.AreEqual("/.well-known/caldav", defaultResponse.GetContent());
         }
 
     }

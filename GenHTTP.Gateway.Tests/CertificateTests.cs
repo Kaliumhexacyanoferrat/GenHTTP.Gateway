@@ -1,8 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-using Xunit;
-
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -11,14 +9,16 @@ using GenHTTP.Modules.IO;
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
 using GenHTTP.Gateway.Tests.Domain;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GenHTTP.Gateway.Tests
 {
 
+    [TestClass]
     public class CertificateTests
     {
 
-        [Fact]
+        [TestMethod]
         public async Task TestLoader()
         {
             var environment = TestEnvironment.Create();
@@ -44,9 +44,9 @@ hosts:
 
                 var provider = CertificateLoader.GetProvider(environment, parsed);
 
-                Assert.NotNull(provider?.Provide("localhost"));
+                Assert.IsNotNull(provider?.Provide("localhost"));
 
-                Assert.Null(provider?.Provide("anotherhost"));
+                Assert.IsNull(provider?.Provide("anotherhost"));
 
                 Engine.Setup(environment, parsed);
             }
