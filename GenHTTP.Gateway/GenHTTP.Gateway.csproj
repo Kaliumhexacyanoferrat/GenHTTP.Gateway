@@ -31,7 +31,7 @@
     
     <PackageReference Include="GenHTTP.Modules.IO" Version="5.2.3" />    
     
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="5.2.3" />    
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="6.0.0" />    
     
     <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="5.2.0" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
