@@ -27,7 +27,7 @@
     
     <PackageReference Include="GenHTTP.Core" Version="5.2.0" />
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="5.2.0" />
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="6.0.0" />
     
     <PackageReference Include="GenHTTP.Modules.IO" Version="5.2.3" />    
     
