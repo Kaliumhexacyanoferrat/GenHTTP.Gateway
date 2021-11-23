@@ -7,10 +7,10 @@ RUN dotnet restore -r linux-arm
 
 # copy and publish app and libraries
 COPY GenHTTP.Gateway/ .
-RUN dotnet publish -c release -o /app -r linux-arm --no-restore /p:PublishTrimmed=true /p:TrimMode=Link
+RUN dotnet publish -c release -o /app -r linux-arm --no-restore --self-contained
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-buster-slim-arm32v7
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-bullseye-slim-arm32v7
 WORKDIR /app
 COPY --from=build /app .
 
