@@ -10,7 +10,7 @@ The GenHTTP Gateway is available as a docker image on [DockerHub](https://hub.do
 
 ## Development
 
-Building the gateway from source requires the [.NET Core SDK](https://dotnet.microsoft.com/download) to be installed.
+Building the gateway from source requires the [.NET SDK](https://dotnet.microsoft.com/download) to be installed.
 The following commands will clone the repository and run the gateway on port 80:
 
 ~~~bash
