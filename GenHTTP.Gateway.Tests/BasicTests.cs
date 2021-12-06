@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 using GenHTTP.Gateway.Tests.Domain;
 
@@ -13,7 +14,7 @@ namespace GenHTTP.Gateway.Tests
     {
 
         [TestMethod]
-        public void TestOverlay()
+        public async Task TestOverlay()
         {
             var config = @$"
 hosts:
@@ -23,13 +24,13 @@ hosts:
 
             File.WriteAllText(Path.Combine(runner.Environment.Data, "file.txt"), "Hello World!");
 
-            using var response = runner.GetResponse("/file.txt");
+            using var response = await runner.GetResponse("/file.txt");
 
-            Assert.AreEqual("Hello World!", response.GetContent());
+            Assert.AreEqual("Hello World!", await response.GetContent());
         }
 
         [TestMethod]
-        public void TestNotFound()
+        public async Task TestNotFound()
         {
             var config = @$"
 hosts:
@@ -37,7 +38,7 @@ hosts:
 
             using var runner = TestRunner.Run(config);
 
-            using var response = runner.GetResponse("/notfound");
+            using var response = await runner.GetResponse("/notfound");
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }

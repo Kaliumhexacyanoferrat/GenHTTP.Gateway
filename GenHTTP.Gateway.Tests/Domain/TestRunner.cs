@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Cache;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 using GenHTTP.Api.Infrastructure;
 using GenHTTP.Gateway.Configuration;
@@ -13,7 +15,18 @@ namespace GenHTTP.Gateway.Tests.Domain
 
     public class TestRunner : IDisposable
     {
-        private static object _SyncRoot = new object();
+        private static readonly object _SyncRoot = new();
+
+        private static readonly HttpClientHandler _Handler = new()
+        {
+            AllowAutoRedirect = false
+        };
+
+        private static readonly HttpClient _HttpClient = new()
+        {
+            Timeout = TimeSpan.FromSeconds(3)
+        };
+
         private static ushort _NextPort = 20000;
 
         #region Get-/Setters
@@ -76,22 +89,11 @@ namespace GenHTTP.Gateway.Tests.Domain
 
         #region Functionality
 
-        public HttpWebRequest GetRequest(string? uri = null)
-        {
-            var request = WebRequest.CreateHttp($"http://localhost:{Port}{uri ?? ""}");
-            request.AllowAutoRedirect = false;
+        public HttpRequestMessage GetRequest(string? uri = null) => new HttpRequestMessage(HttpMethod.Get, $"http://localhost:{Port}{uri ?? ""}");
 
-#if DEBUG
-            request.Timeout = 3000;
-#endif
+        public Task<HttpResponseMessage> GetResponse(HttpRequestMessage request) => _HttpClient.SendAsync(request);
 
-            return request;
-        }
-
-        public HttpWebResponse GetResponse(string? uri = null)
-        {
-            return GetRequest(uri).GetSafeResponse();
-        }
+        public Task<HttpResponseMessage> GetResponse(string? uri = null) => _HttpClient.SendAsync(GetRequest(uri));
 
         #endregion
 

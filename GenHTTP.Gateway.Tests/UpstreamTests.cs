@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 using GenHTTP.Gateway.Tests.Domain;
 using GenHTTP.Modules.IO;
@@ -13,7 +14,7 @@ namespace GenHTTP.Gateway.Tests
     {
 
         [TestMethod]
-        public void TestDefault()
+        public async Task TestDefault()
         {
             using var defaultUpstream = Upstream.Create("default");
 
@@ -30,17 +31,17 @@ hosts:
 
             using var runner = TestRunner.Run(config);
 
-            using var defaultResponse = runner.GetResponse();
+            using var defaultResponse = await runner.GetResponse();
 
-            Assert.AreEqual("default", defaultResponse.GetContent());
+            Assert.AreEqual("default", await defaultResponse.GetContent());
 
-            using var routeResponse = runner.GetResponse("/route/");
+            using var routeResponse = await runner.GetResponse("/route/");
 
-            Assert.AreEqual("route", routeResponse.GetContent());
+            Assert.AreEqual("route", await routeResponse.GetContent());
         }
 
         [TestMethod]
-        public void TestWellKnown()
+        public async Task TestWellKnown()
         {
             var handler = InlineHandlerBuilder.Create(async (h, r) =>
             {
@@ -59,9 +60,9 @@ hosts:
 
             Directory.CreateDirectory(Path.Combine(runner.Environment.Data, ".well-known"));
 
-            using var defaultResponse = runner.GetResponse("/.well-known/caldav");
+            using var defaultResponse = await runner.GetResponse("/.well-known/caldav");
 
-            Assert.AreEqual("/.well-known/caldav", defaultResponse.GetContent());
+            Assert.AreEqual("/.well-known/caldav", await defaultResponse.GetContent());
         }
 
     }

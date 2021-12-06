@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 using GenHTTP.Gateway.Tests.Domain;
 
@@ -12,7 +13,7 @@ namespace GenHTTP.Gateway.Tests
     {
 
         [TestMethod]
-        public void TestListing()
+        public async Task TestListing()
         {
             var environment = TestEnvironment.Create();
 
@@ -28,9 +29,9 @@ hosts:
 
                 using var runner = TestRunner.Run(config);
 
-                using var response = runner.GetResponse();
+                using var response = await runner.GetResponse();
 
-                Assert.IsTrue(response.GetContent().Contains("hey.txt"));
+                Assert.IsTrue((await response.GetContent()).Contains("hey.txt"));
             }
             finally
             {

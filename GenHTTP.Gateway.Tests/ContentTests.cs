@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 using GenHTTP.Gateway.Tests.Domain;
 
@@ -12,7 +13,7 @@ namespace GenHTTP.Gateway.Tests
     {
 
         [TestMethod]
-        public void TestStaticContent()
+        public async Task TestStaticContent()
         {
             var environment = TestEnvironment.Create();
 
@@ -30,9 +31,9 @@ hosts:
 
                 using var runner = TestRunner.Run(config);
 
-                using var response = runner.GetResponse();
+                using var response = await runner.GetResponse();
 
-                Assert.AreEqual("Hello World!", response.GetContent());
+                Assert.AreEqual("Hello World!", await response.GetContent());
             }
             finally
             {
