@@ -3,7 +3,7 @@
   <PropertyGroup>
 
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -34,7 +34,7 @@
     <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="6.4.0" />    
     
     <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="6.4.0" />
-    <PackageReference Include="YamlDotNet" Version="12.0.2" />
+    <PackageReference Include="YamlDotNet" Version="12.1.0" />
     
   </ItemGroup>
 
