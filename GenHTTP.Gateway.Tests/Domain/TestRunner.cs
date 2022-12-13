@@ -22,7 +22,7 @@ namespace GenHTTP.Gateway.Tests.Domain
             AllowAutoRedirect = false
         };
 
-        private static readonly HttpClient _HttpClient = new()
+        private static readonly HttpClient _HttpClient = new(_Handler)
         {
             Timeout = TimeSpan.FromSeconds(3)
         };
