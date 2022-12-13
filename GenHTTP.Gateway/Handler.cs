@@ -4,6 +4,7 @@ using System.IO;
 using GenHTTP.Api.Content;
 using GenHTTP.Api.Infrastructure;
 
+using GenHTTP.Modules.Basics;
 using GenHTTP.Modules.VirtualHosting;
 using GenHTTP.Modules.Layouting;
 using GenHTTP.Modules.Security.Providers;
@@ -91,6 +92,10 @@ namespace GenHTTP.Gateway
 
                     layout.Fallback(staticContent);
                 }
+            }
+            else if (config.Location != null)
+            {
+                layout.Fallback(Redirect.To(config.Location));
             }
 
             if (config.Routes != null)
