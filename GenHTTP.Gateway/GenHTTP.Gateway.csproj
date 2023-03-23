@@ -35,7 +35,7 @@
     
     <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="6.4.0" />
 
-    <PackageReference Include="YamlDotNet" Version="12.2.0" />
+    <PackageReference Include="YamlDotNet" Version="13.0.2" />
     
   </ItemGroup>
 
