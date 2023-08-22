@@ -35,7 +35,7 @@ namespace GenHTTP.Gateway.Tests.Domain
         public static Upstream Create(string content)
         {
             var router = Layout.Create()
-                               .Fallback(Content.From(Resource.FromString(content)));
+                               .Add(Content.From(Resource.FromString(content)));
 
             return Create(router);
         }

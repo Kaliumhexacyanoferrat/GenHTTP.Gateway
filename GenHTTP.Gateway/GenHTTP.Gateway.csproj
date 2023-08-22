@@ -25,17 +25,17 @@
 
   <ItemGroup>    
     
-    <PackageReference Include="GenHTTP.Core" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Core" Version="7.0.0" />
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="7.0.0" />
     
-    <PackageReference Include="GenHTTP.Modules.IO" Version="6.4.0" />    
+    <PackageReference Include="GenHTTP.Modules.IO" Version="7.0.0" />    
     
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="6.4.0" />    
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="7.0.0" />    
     
-    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="6.4.0" />
+    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="7.0.0" />
 
-    <PackageReference Include="YamlDotNet" Version="13.0.2" />
+    <PackageReference Include="YamlDotNet" Version="13.2.0" />
     
   </ItemGroup>
 

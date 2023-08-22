@@ -37,7 +37,7 @@ namespace GenHTTP.Gateway.Tests.Domain
             return Logic(this, request);
         }
 
-        public IEnumerable<ContentElement> GetContent(IRequest request) => Enumerable.Empty<ContentElement>();
+        public IAsyncEnumerable<ContentElement> GetContentAsync(IRequest request) => AsyncEnumerable.Empty<ContentElement>();
 
         public ValueTask PrepareAsync() => new();
 

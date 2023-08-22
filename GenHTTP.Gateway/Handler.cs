@@ -43,7 +43,7 @@ namespace GenHTTP.Gateway
 
             if (config?.Default != null)
             {
-                layout.Fallback(GetHandler(config.Default));
+                layout.Add(GetHandler(config.Default));
             }
 
             if (config?.Routes != null)
@@ -70,11 +70,11 @@ namespace GenHTTP.Gateway
 
             if (content != null)
             {
-                layout.Fallback(content);
+                layout.Add(content);
             }
             else if (config.Listing != null)
             {
-                layout.Fallback(Listing.From(ResourceTree.FromDirectory(config.Listing)));
+                layout.Add(Listing.From(ResourceTree.FromDirectory(config.Listing)));
             }
             else if (config.Content != null)
             {
@@ -82,7 +82,7 @@ namespace GenHTTP.Gateway
                 {
                     var directory = Resources.From(ResourceTree.FromDirectory(config.Content.Directory));
                     
-                    var staticContent = Layout.Create().Fallback(directory);
+                    var staticContent = Layout.Create().Add(directory);
 
                     if (config.Content.Index != null)
                     {
@@ -90,12 +90,12 @@ namespace GenHTTP.Gateway
                         layout.Index(Download.From(Resource.FromFile(indexFile)));
                     }
 
-                    layout.Fallback(staticContent);
+                    layout.Add(staticContent);
                 }
             }
             else if (config.Location != null)
             {
-                layout.Fallback(Redirect.To(config.Location));
+                layout.Add(Redirect.To(config.Location));
             }
 
             if (config.Routes != null)

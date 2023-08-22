@@ -53,7 +53,7 @@ namespace GenHTTP.Gateway.Routing
 
         #region Functionality
 
-        public IEnumerable<ContentElement> GetContent(IRequest request) => Content.GetContent(request);
+        public IAsyncEnumerable<ContentElement> GetContentAsync(IRequest request) => Content.GetContentAsync(request);
 
         public async ValueTask<IResponse?> HandleAsync(IRequest request)
         {
