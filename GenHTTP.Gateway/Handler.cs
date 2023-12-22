@@ -29,7 +29,7 @@ namespace GenHTTP.Gateway
             {
                 foreach (var host in config.Hosts)
                 {
-                    if (host.Key == "*")
+                    if (host.Key == "any")
                     {
                         hosts.Default(GetHandler(environment, host.Value));
                     }
