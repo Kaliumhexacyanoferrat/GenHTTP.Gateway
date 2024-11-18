@@ -1,33 +1,30 @@
-﻿using System.IO;
+﻿namespace GenHTTP.Gateway.Tests.Domain;
 
-namespace GenHTTP.Gateway.Tests.Domain
+public class TestEnvironment : Environment
 {
-
-    public class TestEnvironment : Environment
-    {
 
         #region Get-/Setters
 
-        public DirectoryInfo Root { get; }
+    public DirectoryInfo Root { get; }
 
         #endregion
 
         #region Initialization
 
-        protected TestEnvironment(DirectoryInfo root) : base(CreateDirectory(root, "config"), CreateDirectory(root, "data"), CreateDirectory(root, "certs"))
-        {
+    protected TestEnvironment(DirectoryInfo root) : base(CreateDirectory(root, "config"), CreateDirectory(root, "data"), CreateDirectory(root, "certs"))
+    {
             Root = root;
         }
 
-        public static TestEnvironment Create()
-        {
+    public static TestEnvironment Create()
+    {
             var root = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
 
             return new TestEnvironment(root);
         }
 
-        private static string CreateDirectory(DirectoryInfo root, string subfolder)
-        {
+    private static string CreateDirectory(DirectoryInfo root, string subfolder)
+    {
             return Directory.CreateDirectory(Path.Combine(root.FullName, subfolder)).FullName;
         }
 
@@ -35,8 +32,8 @@ namespace GenHTTP.Gateway.Tests.Domain
 
         #region Functionality
 
-        public void Cleanup()
-        {
+    public void Cleanup()
+    {
             if (Root.Exists)
             {
                 try
@@ -48,7 +45,5 @@ namespace GenHTTP.Gateway.Tests.Domain
         }
 
         #endregion
-
-    }
 
 }

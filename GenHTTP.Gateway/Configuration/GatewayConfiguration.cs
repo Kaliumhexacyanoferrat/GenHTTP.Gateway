@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace GenHTTP.Gateway.Configuration;
 
-namespace GenHTTP.Gateway.Configuration
+public class GatewayConfiguration
 {
 
-    public class GatewayConfiguration
-    {
-
-        public Dictionary<string, HostConfiguration>? Hosts { get; set; }
+    public Dictionary<string, HostConfiguration>? Hosts { get; set; }
         
-    }
-
 }

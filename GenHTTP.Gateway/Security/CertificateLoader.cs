@@ -1,52 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 
 using GenHTTP.Api.Infrastructure;
 using GenHTTP.Gateway.Configuration;
 
-namespace GenHTTP.Gateway.Security
+namespace GenHTTP.Gateway.Security;
+
+public static class CertificateLoader
 {
 
-    public static class CertificateLoader
+    public static ICertificateProvider? GetProvider(Environment environment, GatewayConfiguration config)
     {
+        var certificates = new Dictionary<string, X509Certificate2>();
 
-        public static ICertificateProvider? GetProvider(Environment environment, GatewayConfiguration config)
+        if (config.Hosts != null)
         {
-            var certificates = new Dictionary<string, X509Certificate2>();
-
-            if (config.Hosts != null)
+            foreach (var host in config.Hosts)
             {
-                foreach (var host in config.Hosts)
-                {
-                    var cert = host.Value?.Security?.Certificate;
+                var cert = host.Value?.Security?.Certificate;
 
-                    if (cert != null)
-                    {
-                        certificates.Add(host.Key, LoadCertificate(environment, cert));
-                    }
+                if (cert != null)
+                {
+                    certificates.Add(host.Key, LoadCertificate(environment, cert));
                 }
             }
-
-            if (certificates.Count > 0)
-            {
-                return new CertificateProvider(certificates, null);
-            }
-
-            return null;
         }
 
-        private static X509Certificate2 LoadCertificate(Environment environment, CertificateConfiguration config)
+        if (certificates.Count > 0)
         {
-            if (config.Pfx == null)
-            {
-                throw new InvalidOperationException("Certificate file has not been specified");
-            }
-
-            return new X509Certificate2(File.ReadAllBytes(Path.Combine(environment.Certificates, config.Pfx)));
+            return new CertificateProvider(certificates, null);
         }
 
+        return null;
+    }
+
+    private static X509Certificate2 LoadCertificate(Environment environment, CertificateConfiguration config)
+    {
+        if (config.Pfx == null)
+        {
+            throw new InvalidOperationException("Certificate file has not been specified");
+        }
+
+        var bytes = File.ReadAllBytes(Path.Combine(environment.Certificates, config.Pfx));
+
+        return X509CertificateLoader.LoadPkcs12(bytes.ToArray(), null);
     }
 
 }
