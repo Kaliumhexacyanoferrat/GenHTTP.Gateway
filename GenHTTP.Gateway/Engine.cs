@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Runtime.InteropServices;
 
 using GenHTTP.Api.Infrastructure;
 
@@ -26,8 +27,15 @@ public static class Engine
 
         if (certificateProvider != null)
         {
-            server.Bind(IPAddress.Any, securePort, certificateProvider)
-                  .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                server.Bind(IPAddress.Any, securePort, certificateProvider)
+                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
+            }
+            else
+            {
+                server.Bind(IPAddress.Any, securePort, certificateProvider);
+            }
         }
 
 #if DEBUG
