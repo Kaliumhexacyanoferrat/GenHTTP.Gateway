@@ -11,7 +11,7 @@ namespace GenHTTP.Gateway.Tests.Domain;
 
 public class TestRunner : IAsyncDisposable
 {
-    private static readonly object SyncRoot = new();
+    private static Random _random = new();
 
     private static readonly HttpClientHandler Handler = new()
     {
@@ -22,8 +22,6 @@ public class TestRunner : IAsyncDisposable
     {
         Timeout = TimeSpan.FromSeconds(3)
     };
-
-    private static ushort _nextPort = 20000;
 
     #region Get-/Setters
 
@@ -49,13 +47,7 @@ public class TestRunner : IAsyncDisposable
         Environment = testEnvironment;
     }
 
-    public static ushort NextPort()
-    {
-        lock (SyncRoot)
-        {
-            return _nextPort++;
-        }
-    }
+    public static ushort NextPort() => (ushort)_random.Next(10000, 60000);
 
     public static async Task<TestRunner> RunAsync(string configuration, TestEnvironment? env = null)
     {
