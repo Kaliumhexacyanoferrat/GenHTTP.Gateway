@@ -18,10 +18,18 @@ public static class Engine
         ushort port = 80, ushort securePort = 443)
     {
         var server = Host.Create()
-                         .Bind(IPAddress.Any, port)
-                         .Bind(IPAddress.IPv6Any, port)
                          .Defaults(secureUpgrade: false)
                          .Console();
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            server.Bind(IPAddress.Any, port)
+                  .Bind(IPAddress.IPv6Any, port);
+        }
+        else
+        {
+            server.Bind(IPAddress.Any, port);
+        }
 
         var certificateProvider = CertificateLoader.GetProvider(environment, config);
 
