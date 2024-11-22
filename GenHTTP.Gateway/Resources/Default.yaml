@@ -1,4 +1,8 @@
-﻿hosts:
+﻿# activate to enable HTTP/3 via QUIC
+# requires port 443 to be reachable via UDP
+enableQuic: false
+
+hosts:
 
   # configuration for a specific host
   # duplicate this entry to add another host

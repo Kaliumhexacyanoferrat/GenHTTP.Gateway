@@ -26,15 +26,15 @@
 
   <ItemGroup>
 
-    <PackageReference Include="GenHTTP.Core.Kestrel" Version="9.0.0" />
+    <PackageReference Include="GenHTTP.Core.Kestrel" Version="9.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="9.0.0" />
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="9.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.IO" Version="9.0.0" />
+    <PackageReference Include="GenHTTP.Modules.IO" Version="9.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="9.0.0" />
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="9.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="9.0.0" />
+    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="9.1.0" />
 
     <PackageReference Include="YamlDotNet" Version="16.2.0" />
 

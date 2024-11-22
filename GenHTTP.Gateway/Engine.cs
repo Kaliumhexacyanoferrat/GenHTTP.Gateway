@@ -35,14 +35,16 @@ public static class Engine
 
         if (certificateProvider != null)
         {
+            var quic = config.EnableQuic ?? false;
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                server.Bind(IPAddress.Any, securePort, certificateProvider)
-                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider);
+                server.Bind(IPAddress.Any, securePort, certificateProvider, enableQuic: quic)
+                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider, enableQuic: quic);
             }
             else
             {
-                server.Bind(IPAddress.Any, securePort, certificateProvider);
+                server.Bind(IPAddress.Any, securePort, certificateProvider, enableQuic: quic);
             }
         }
 
