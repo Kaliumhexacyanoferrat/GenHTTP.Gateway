@@ -14,6 +14,8 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-alpine
 WORKDIR /app
 COPY --from=build /app .
 
+RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ libmsquic
+
 ENTRYPOINT ["./GenHTTP.Gateway"]
 
 ENV DOCKER_FLAVOR=linux
