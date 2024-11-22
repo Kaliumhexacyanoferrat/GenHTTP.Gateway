@@ -1,11 +1,8 @@
-﻿namespace GenHTTP.Gateway.Configuration
+﻿namespace GenHTTP.Gateway.Configuration;
+
+public class SecurityConfiguration
 {
 
-    public class SecurityConfiguration
-    {
-
-        public CertificateConfiguration? Certificate { get; set; }
-
-    }
+    public CertificateConfiguration? Certificate { get; set; }
 
 }

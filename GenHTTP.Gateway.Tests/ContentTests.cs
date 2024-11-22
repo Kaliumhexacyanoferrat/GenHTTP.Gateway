@@ -1,20 +1,16 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-
-using GenHTTP.Gateway.Tests.Domain;
+﻿using GenHTTP.Gateway.Tests.Domain;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GenHTTP.Gateway.Tests
+namespace GenHTTP.Gateway.Tests;
+
+[TestClass]
+public class ContentTests
 {
 
-    [TestClass]
-    public class ContentTests
+    [TestMethod]
+    public async Task TestStaticContent()
     {
-
-        [TestMethod]
-        public async Task TestStaticContent()
-        {
             var environment = TestEnvironment.Create();
 
             File.WriteAllText(Path.Combine(environment.Root.FullName, "index.html"), "Hello World!");
@@ -29,7 +25,7 @@ hosts:
             directory: {environment.Root.FullName}
             index: index.html";
 
-                using var runner = TestRunner.Run(config);
+                await using var runner = await TestRunner.RunAsync(config);
 
                 using var response = await runner.GetResponse();
 
@@ -40,7 +36,5 @@ hosts:
                 environment.Cleanup();
             }
         }
-
-    }
 
 }

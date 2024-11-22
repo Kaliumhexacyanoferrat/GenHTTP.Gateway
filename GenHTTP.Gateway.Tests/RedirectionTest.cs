@@ -1,21 +1,17 @@
-﻿using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-
+﻿using System.Net;
 using GenHTTP.Gateway.Tests.Domain;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GenHTTP.Gateway.Tests
+namespace GenHTTP.Gateway.Tests;
+
+[TestClass]
+public class RedirectionTest
 {
 
-    [TestClass]
-    public class RedirectionTest
+    [TestMethod]
+    public async Task TestRedirection()
     {
-
-        [TestMethod]
-        public async Task TestRedirection()
-        {
             var environment = TestEnvironment.Create();
 
             File.WriteAllText(Path.Combine(environment.Root.FullName, "index.html"), "Hello World!");
@@ -28,7 +24,7 @@ hosts:
     default:
         location: https://google.com";
 
-                using var runner = TestRunner.Run(config);
+                await using var runner = await TestRunner.RunAsync(config);
 
                 using var response = await runner.GetResponse();
 
@@ -39,7 +35,5 @@ hosts:
                 environment.Cleanup();
             }
         }
-
-    }
 
 }

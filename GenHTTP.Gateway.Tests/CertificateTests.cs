@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-
-using YamlDotNet.Serialization;
+﻿using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 using GenHTTP.Modules.IO;
@@ -11,16 +8,15 @@ using GenHTTP.Gateway.Security;
 using GenHTTP.Gateway.Tests.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GenHTTP.Gateway.Tests
+namespace GenHTTP.Gateway.Tests;
+
+[TestClass]
+public class CertificateTests
 {
 
-    [TestClass]
-    public class CertificateTests
+    [TestMethod]
+    public async Task TestLoader()
     {
-
-        [TestMethod]
-        public async Task TestLoader()
-        {
             var environment = TestEnvironment.Create();
 
             try
@@ -56,14 +52,12 @@ hosts:
             }
         }
 
-        private static GatewayConfiguration GetConfiguration(string yaml)
-        {
+    private static GatewayConfiguration GetConfiguration(string yaml)
+    {
             var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
                                                         .Build();
 
             return deserializer.Deserialize<GatewayConfiguration>(yaml);
         }
-
-    }
 
 }

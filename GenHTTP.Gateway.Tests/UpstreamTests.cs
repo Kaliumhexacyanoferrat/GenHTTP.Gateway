@@ -1,24 +1,20 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-
-using GenHTTP.Gateway.Tests.Domain;
+﻿using GenHTTP.Gateway.Tests.Domain;
 using GenHTTP.Modules.IO;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GenHTTP.Gateway.Tests
+namespace GenHTTP.Gateway.Tests;
+
+[TestClass]
+public class UpstreamTests
 {
 
-    [TestClass]
-    public class UpstreamTests
+    [TestMethod]
+    public async Task TestDefault()
     {
+            await using var defaultUpstream = await Upstream.CreateAsync("default");
 
-        [TestMethod]
-        public async Task TestDefault()
-        {
-            using var defaultUpstream = Upstream.Create("default");
-
-            using var routeUpstream = Upstream.Create("route");
+            await using var routeUpstream = await Upstream.CreateAsync("route");
 
             var config = @$"
 hosts:
@@ -29,7 +25,7 @@ hosts:
         route:
             destination: http://localhost:{routeUpstream.Port}";
 
-            using var runner = TestRunner.Run(config);
+            await using var runner = await TestRunner.RunAsync(config);
 
             using var defaultResponse = await runner.GetResponse();
 
@@ -40,15 +36,15 @@ hosts:
             Assert.AreEqual("route", await routeResponse.GetContent());
         }
 
-        [TestMethod]
-        public async Task TestWellKnown()
-        {
+    [TestMethod]
+    public async Task TestWellKnown()
+    {
             var handler = InlineHandlerBuilder.Create(async (h, r) =>
             {
-                return await (Content.From(Resource.FromString(r.Target.Path.ToString())).Build(h)).HandleAsync(r);
+                return await (Content.From(Resource.FromString(r.Target.Path.ToString())).Build()).HandleAsync(r);
             });
 
-            using var defaultUpstream = Upstream.Create(handler);
+            await using var defaultUpstream = await Upstream.CreateAsync(handler);
 
             var config = @$"
 hosts:
@@ -56,7 +52,7 @@ hosts:
     default:
         destination: http://localhost:{defaultUpstream.Port}";
 
-            using var runner = TestRunner.Run(config);
+            await using var runner = await TestRunner.RunAsync(config);
 
             Directory.CreateDirectory(Path.Combine(runner.Environment.Data, ".well-known"));
 
@@ -64,7 +60,5 @@ hosts:
 
             Assert.AreEqual("/.well-known/caldav", await defaultResponse.GetContent());
         }
-
-    }
 
 }

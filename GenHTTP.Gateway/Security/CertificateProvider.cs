@@ -1,46 +1,42 @@
-﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 
 using GenHTTP.Api.Infrastructure;
 
-namespace GenHTTP.Gateway.Security
-{
+namespace GenHTTP.Gateway.Security;
 
-    public class CertificateProvider : ICertificateProvider
-    {
+public class CertificateProvider : ICertificateProvider
+{
 
         #region Get-/Setters
 
-        public Dictionary<string, X509Certificate2> Certificates { get; }
+    public Dictionary<string, X509Certificate2> Certificates { get; }
 
-        public X509Certificate2? Default { get; }
+    public X509Certificate2? Default { get; }
 
         #endregion
 
-        public CertificateProvider(Dictionary<string, X509Certificate2> certificates,
-                                   X509Certificate2? defaultCertificate)
-        {
-            Certificates = certificates;
-            Default = defaultCertificate;
-        }
+    public CertificateProvider(Dictionary<string, X509Certificate2> certificates,
+        X509Certificate2? defaultCertificate)
+    {
+        Certificates = certificates;
+        Default = defaultCertificate;
+    }
 
         #region Functionality
 
-        public X509Certificate2? Provide(string? host)
+    public X509Certificate2? Provide(string? host)
+    {
+        if (host != null)
         {
-            if (host != null)
+            if (Certificates.TryGetValue(host, out var cert))
             {
-                if (Certificates.TryGetValue(host, out var cert))
-                {
-                    return cert;
-                }
+                return cert;
             }
-
-            return Default;
         }
 
-        #endregion
-
+        return Default;
     }
+
+        #endregion
 
 }

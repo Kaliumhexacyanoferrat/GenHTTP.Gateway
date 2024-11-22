@@ -1,26 +1,23 @@
-﻿using System.IO;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 using GenHTTP.Gateway.Tests.Domain;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GenHTTP.Gateway.Tests
+namespace GenHTTP.Gateway.Tests;
+
+[TestClass]
+public class BasicTests
 {
 
-    [TestClass]
-    public class BasicTests
+    [TestMethod]
+    public async Task TestOverlay()
     {
-
-        [TestMethod]
-        public async Task TestOverlay()
-        {
             var config = @$"
 hosts:
   localhost:";
 
-            using var runner = TestRunner.Run(config);
+            await using var runner = await TestRunner.RunAsync(config);
 
             File.WriteAllText(Path.Combine(runner.Environment.Data, "file.txt"), "Hello World!");
 
@@ -29,23 +26,23 @@ hosts:
             Assert.AreEqual("Hello World!", await response.GetContent());
         }
 
-        [TestMethod]
-        public async Task TestNotFound()
-        {
+    [TestMethod]
+    public async Task TestNotFound()
+    {
             var config = @$"
 hosts:
   localhost:";
 
-            using var runner = TestRunner.Run(config);
+            await using var runner = await TestRunner.RunAsync(config);
 
             using var response = await runner.GetResponse("/notfound");
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [TestMethod]
-        public void TestInitialization()
-        {
+    [TestMethod]
+    public void TestInitialization()
+    {
             var environment = TestEnvironment.Create();
 
             try
@@ -58,10 +55,8 @@ hosts:
             }
             finally
             {
-                environment.Cleanup();   
+                environment.Cleanup();
             }
         }
-
-    }
 
 }

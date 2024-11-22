@@ -3,10 +3,11 @@
   <PropertyGroup>
 
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    
-    <LangVersion>10.0</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+
+    <LangVersion>13.0</LangVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <ServerGarbageCollection>true</ServerGarbageCollection>
@@ -23,20 +24,20 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>    
-    
-    <PackageReference Include="GenHTTP.Core" Version="8.5.2" />
+  <ItemGroup>
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="8.5.0" />
-    
-    <PackageReference Include="GenHTTP.Modules.IO" Version="8.5.0" />    
-    
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="8.5.0" />    
-    
-    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="8.5.0" />
+    <PackageReference Include="GenHTTP.Core.Kestrel" Version="9.0.0" />
 
-    <PackageReference Include="YamlDotNet" Version="15.1.6" />
-    
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="9.0.0" />
+
+    <PackageReference Include="GenHTTP.Modules.IO" Version="9.0.0" />
+
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="9.0.0" />
+
+    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="9.0.0" />
+
+    <PackageReference Include="YamlDotNet" Version="16.2.0" />
+
   </ItemGroup>
 
   <ItemGroup>
