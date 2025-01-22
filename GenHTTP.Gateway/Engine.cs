@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 using GenHTTP.Api.Infrastructure;
 
-using GenHTTP.Engine.Kestrel;
+using GenHTTP.Engine.Internal;
 using GenHTTP.Modules.Practices;
 
 using GenHTTP.Gateway.Configuration;
