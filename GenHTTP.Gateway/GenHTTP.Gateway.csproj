@@ -26,7 +26,7 @@
 
   <ItemGroup>
 
-    <PackageReference Include="GenHTTP.Core.Kestrel" Version="9.6.0" />
+    <PackageReference Include="GenHTTP.Core" Version="9.6.0" />
 
     <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="9.6.0" />
 
