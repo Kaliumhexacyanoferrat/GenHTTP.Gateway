@@ -21,7 +21,7 @@ public class Upstream : IAsyncDisposable
 
     protected Upstream(ushort port, IHandlerBuilder handler)
     {
-        Host = GenHTTP.Engine.Internal.Host.Create()
+        Host = GenHTTP.Engine.Kestrel.Host.Create()
                       .Port(port)
                       .Handler(handler);
 

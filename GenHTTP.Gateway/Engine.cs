@@ -1,13 +1,8 @@
-﻿using System.Net;
-using System.Runtime.InteropServices;
-
-using GenHTTP.Api.Infrastructure;
-
-using GenHTTP.Engine.Internal;
-using GenHTTP.Modules.Practices;
-
+﻿using GenHTTP.Api.Infrastructure;
+using GenHTTP.Engine.Kestrel;
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Security;
+using GenHTTP.Modules.Practices;
 
 namespace GenHTTP.Gateway;
 
@@ -19,33 +14,14 @@ public static class Engine
     {
         var server = Host.Create()
                          .Defaults(secureUpgrade: false)
+                         .Bind(null, port)
                          .Console();
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            server.Bind(IPAddress.Any, port)
-                  .Bind(IPAddress.IPv6Any, port);
-        }
-        else
-        {
-            server.Bind(IPAddress.Any, port);
-        }
 
         var certificateProvider = CertificateLoader.GetProvider(environment, config);
 
         if (certificateProvider != null)
         {
-            var quic = config.EnableQuic ?? false;
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                server.Bind(IPAddress.Any, securePort, certificateProvider, enableQuic: quic)
-                      .Bind(IPAddress.IPv6Any, securePort, certificateProvider, enableQuic: quic);
-            }
-            else
-            {
-                server.Bind(IPAddress.Any, securePort, certificateProvider, enableQuic: quic);
-            }
+            server.Bind(null, securePort, certificateProvider, enableQuic: config.EnableQuic ?? false);
         }
 
 #if DEBUG
