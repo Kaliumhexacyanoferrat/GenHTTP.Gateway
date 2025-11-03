@@ -13,7 +13,7 @@ jobs:
 
     name: Build & Publish Packages
 
-    runs-on: windows-latest  
+    runs-on: ubuntu-latest  
 
     environment:
       name: production
@@ -40,14 +40,12 @@ jobs:
           docker build --pull -f Dockerfile.linux-x64 -t genhttp/gateway:linux-x64 .
           docker build --pull -f Dockerfile.linux-arm32 -t genhttp/gateway:linux-arm32 .
           docker build --pull -f Dockerfile.linux-arm64 -t genhttp/gateway:linux-arm64 .
-          docker build --pull -f Dockerfile.windows-x64 -t genhttp/gateway:windows-x64 .
 
       - name: Push Images
         run: |
           docker push genhttp/gateway:linux-x64
           docker push genhttp/gateway:linux-arm32
           docker push genhttp/gateway:linux-arm64
-          docker push genhttp/gateway:windows-x64
 
       - name: Push Multi
         run: |
