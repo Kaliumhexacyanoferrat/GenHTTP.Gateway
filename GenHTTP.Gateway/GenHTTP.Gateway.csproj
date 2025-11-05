@@ -32,7 +32,7 @@
 
     <PackageReference Include="GenHTTP.Modules.IO" Version="9.8.0" />
 
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="9.8.0" />
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="9.8.1" />
 
     <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="9.8.0" />
 
