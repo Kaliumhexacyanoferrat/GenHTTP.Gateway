@@ -1,7 +1,5 @@
 ﻿using GenHTTP.Api.Content;
-using GenHTTP.Api.Infrastructure;
 
-using GenHTTP.Modules.Basics;
 using GenHTTP.Modules.VirtualHosting;
 using GenHTTP.Modules.Layouting;
 using GenHTTP.Modules.Security.Providers;
@@ -11,6 +9,8 @@ using GenHTTP.Modules.ReverseProxy;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
+using GenHTTP.Modules.Redirects;
+using GenHTTP.Modules.Security;
 
 namespace GenHTTP.Gateway;
 

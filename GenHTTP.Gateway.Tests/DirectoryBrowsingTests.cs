@@ -27,7 +27,7 @@ hosts:
 
                 using var response = await runner.GetResponse();
 
-                Assert.IsTrue((await response.GetContent()).Contains("hey.txt"));
+                Assert.Contains("hey.txt", await response.GetContent());
             }
             finally
             {

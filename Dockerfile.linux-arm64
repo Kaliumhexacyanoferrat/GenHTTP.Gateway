@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -10,11 +10,11 @@ COPY GenHTTP.Gateway/ .
 RUN dotnet publish -c release -o /app -r linux-arm64 --no-restore --self-contained
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-alpine-arm64v8
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine-arm64v8
 WORKDIR /app
 COPY --from=build /app .
 
-ENTRYPOINT ["./GenHTTP.Gateway"]
+ENTRYPOINT ["dotnet", "./GenHTTP.Gateway"]
 
 ENV DOCKER_FLAVOR=linux
 
