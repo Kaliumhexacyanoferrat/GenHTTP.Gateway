@@ -14,7 +14,7 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine-arm64v8
 WORKDIR /app
 COPY --from=build /app .
 
-ENTRYPOINT ["dotnet", "./GenHTTP.Gateway"]
+ENTRYPOINT ["./GenHTTP.Gateway"]
 
 ENV DOCKER_FLAVOR=linux
 

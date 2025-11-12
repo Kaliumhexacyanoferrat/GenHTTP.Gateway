@@ -7,14 +7,14 @@ RUN dotnet restore -r linux-arm
 
 # copy and publish app and libraries
 COPY GenHTTP.Gateway/ .
-RUN dotnet publish -c release -o /app -r linux-arm --no-restore
+RUN dotnet publish -c release -o /app -r linux-arm --no-restore --self-contained
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine-arm32v7
 WORKDIR /app
 COPY --from=build /app .
 
-ENTRYPOINT ["dotnet", "./GenHTTP.Gateway"]
+ENTRYPOINT ["./GenHTTP.Gateway"]
 
 ENV DOCKER_FLAVOR=linux
 

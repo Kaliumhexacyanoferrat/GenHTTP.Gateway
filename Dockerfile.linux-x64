@@ -6,8 +6,8 @@ COPY GenHTTP.Gateway/*.csproj .
 RUN dotnet restore -r linux-musl-x64
 
 # copy and publish app and libraries
-COPY GenHTTP.Gateway/ .
-RUN dotnet publish -c release -o /app -r linux-musl-x64 --no-restore
+COPY GenHTTP.Gateway/ . 
+RUN dotnet publish -c release -o /app --no-restore --self-contained
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine
@@ -16,7 +16,7 @@ COPY --from=build /app .
 
 RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ libmsquic
 
-ENTRYPOINT ["dotnet", "./GenHTTP.Gateway"]
+ENTRYPOINT ["./GenHTTP.Gateway"]
 
 ENV DOCKER_FLAVOR=linux
 
