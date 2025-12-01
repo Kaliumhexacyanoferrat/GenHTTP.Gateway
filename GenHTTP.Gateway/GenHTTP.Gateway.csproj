@@ -28,9 +28,9 @@
 
     <PackageReference Include="GenHTTP.Core.Kestrel" Version="10.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="10.1.0" />
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="10.1.1" />
 
-    <PackageReference Include="GenHTTP.Modules.IO" Version="10.1.0" />
+    <PackageReference Include="GenHTTP.Modules.IO" Version="10.1.1" />
 
     <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="10.1.0" />
 
