@@ -9,6 +9,8 @@ using GenHTTP.Modules.ReverseProxy;
 
 using GenHTTP.Gateway.Configuration;
 using GenHTTP.Gateway.Routing;
+
+using GenHTTP.Modules.Files;
 using GenHTTP.Modules.Redirects;
 using GenHTTP.Modules.Security;
 
@@ -83,14 +85,14 @@ public static class Handler
         {
             if (config.Content.Directory != null)
             {
-                var directory = Resources.From(ResourceTree.FromDirectory(config.Content.Directory));
+                var directory = Assets.From(ResourceTree.FromDirectory(config.Content.Directory));
 
                 var staticContent = Layout.Create().Add(directory);
 
                 if (config.Content.Index != null)
                 {
                     var indexFile = Path.Combine(config.Content.Directory, config.Content.Index);
-                    layout.Index(Download.From(Resource.FromFile(indexFile)));
+                    layout.Index(Asset.From(Resource.FromFile(indexFile)));
                 }
 
                 layout.Add(staticContent);
@@ -124,4 +126,5 @@ public static class Handler
 
         return null;
     }
+    
 }

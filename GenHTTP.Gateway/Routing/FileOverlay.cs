@@ -1,6 +1,8 @@
 ﻿using GenHTTP.Api.Content;
+using GenHTTP.Api.Infrastructure;
 using GenHTTP.Api.Protocol;
 
+using GenHTTP.Modules.Files;
 using GenHTTP.Modules.IO;
 
 namespace GenHTTP.Gateway.Routing;
@@ -16,7 +18,7 @@ namespace GenHTTP.Gateway.Routing;
 public class FileOverlay : IConcern
 {
 
-        #region Get-/Setters
+    #region Get-/Setters
 
     public IHandler Content { get; }
 
@@ -24,27 +26,29 @@ public class FileOverlay : IConcern
 
     public string DataDirectory { get; }
 
-        #endregion
+    #endregion
 
-        #region Initialization
+    #region Initialization
 
     public FileOverlay(IHandler content, Environment environment)
     {
         DataDirectory = new DirectoryInfo(environment.Data).FullName;
 
-        Overlay = Resources.From(ResourceTree.FromDirectory(environment.Data))
-                           .Build();
+        Overlay = Assets.From(ResourceTree.FromDirectory(environment.Data))
+                        .Build();
 
         Content = content;
     }
 
-        #endregion
+    #endregion
 
-        #region Functionality
+    #region Functionality
 
     public async ValueTask<IResponse?> HandleAsync(IRequest request)
     {
-        var targetFile = Path.Combine(DataDirectory, "." + request.Target.Path.ToString(false));
+        var path = request.Header.Target.AsString(remainingOnly: false, decode: true);
+        
+        var targetFile = Path.Combine(DataDirectory, "." + path);
 
         if (File.Exists(targetFile))
         {
@@ -54,12 +58,12 @@ public class FileOverlay : IConcern
         return await Content.HandleAsync(request);
     }
 
-    public async ValueTask PrepareAsync()
+    public async ValueTask PrepareAsync(IServer server)
     {
-        await Content.PrepareAsync();
-        await Overlay.PrepareAsync();
+        await Content.PrepareAsync(server);
+        await Overlay.PrepareAsync(server);
     }
 
-        #endregion
+    #endregion
 
 }

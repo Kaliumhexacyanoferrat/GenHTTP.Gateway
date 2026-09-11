@@ -41,7 +41,9 @@ hosts:
     {
             var handler = InlineHandlerBuilder.Create(async (h, r) =>
             {
-                return await (Content.From(Resource.FromString(r.Target.Path.ToString())).Build()).HandleAsync(r);
+                var target = r.Header.Target.AsString(decode: true, remainingOnly: false);
+                
+                return await (Content.From(Resource.FromString(target)).Build()).HandleAsync(r);
             });
 
             await using var defaultUpstream = await Upstream.CreateAsync(handler);
