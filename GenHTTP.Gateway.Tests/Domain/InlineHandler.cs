@@ -1,4 +1,5 @@
 ﻿using GenHTTP.Api.Content;
+using GenHTTP.Api.Infrastructure;
 using GenHTTP.Api.Protocol;
 
 namespace GenHTTP.Gateway.Tests.Domain;
@@ -28,7 +29,7 @@ public class InlineHandler : IHandler
         return Logic(this, request);
     }
 
-    public ValueTask PrepareAsync() => new();
+    public ValueTask PrepareAsync(IServer server) => new();
 
     #endregion
 

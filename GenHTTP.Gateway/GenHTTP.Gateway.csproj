@@ -3,7 +3,7 @@
   <PropertyGroup>
 
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
 
     <LangVersion>14.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -26,17 +26,19 @@
 
   <ItemGroup>
 
-    <PackageReference Include="GenHTTP.Core.Kestrel" Version="10.5.0" />
+    <PackageReference Include="GenHTTP.Core.Kestrel" Version="11.0.0" />
 
-    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="10.5.0" />
+    <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="11.0.0" />
 
-    <PackageReference Include="GenHTTP.Modules.IO" Version="10.5.0" />
+    <PackageReference Include="GenHTTP.Modules.IO" Version="11.0.0" />
 
-    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="10.5.0" />
+    <PackageReference Include="GenHTTP.Modules.Files" Version="11.0.0" />
 
-    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="10.5.0" />
+    <PackageReference Include="GenHTTP.Modules.ReverseProxy" Version="11.0.0" />
 
-    <PackageReference Include="YamlDotNet" Version="16.3.0" />
+    <PackageReference Include="GenHTTP.Modules.VirtualHosting" Version="11.0.0" />
+
+    <PackageReference Include="YamlDotNet" Version="18.1.0" />
 
   </ItemGroup>
 
