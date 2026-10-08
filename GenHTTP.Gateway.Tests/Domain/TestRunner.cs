@@ -27,6 +27,8 @@ public class TestRunner : IAsyncDisposable
 
     public ushort Port { get; }
 
+    public ushort SecurePort { get; }
+
     public IServerHost Host { get; protected set; }
 
     public TestEnvironment Environment { get; protected set; }
@@ -40,9 +42,10 @@ public class TestRunner : IAsyncDisposable
         HttpWebRequest.DefaultCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
     }
 
-    protected TestRunner(IServerHost host, ushort port, TestEnvironment testEnvironment)
+    protected TestRunner(IServerHost host, ushort port, ushort securePort, TestEnvironment testEnvironment)
     {
         Port = port;
+        SecurePort = securePort;
         Host = host;
         Environment = testEnvironment;
     }
@@ -60,11 +63,12 @@ public class TestRunner : IAsyncDisposable
     public static async Task<TestRunner> RunAsync(GatewayConfiguration configuration, TestEnvironment? env = null)
     {
         var port = NextPort();
+        var securePort = NextPort();
 
         configuration.Ports = new PortConfiguration
         {
             Plain = port,
-            Secure = NextPort()
+            Secure = securePort
         };
 
         var environment = env ?? TestEnvironment.Create();
@@ -76,7 +80,7 @@ public class TestRunner : IAsyncDisposable
 
         await host.StartAsync();
 
-        return new TestRunner(host, port, environment);
+        return new TestRunner(host, port, securePort, environment);
     }
 
     #endregion

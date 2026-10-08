@@ -1,42 +1,63 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-using GenHTTP.Api.Infrastructure;
+using GenHTTP.Engine.Ioxide;
 
 namespace GenHTTP.Gateway.Security;
 
-public class CertificateProvider : ICertificateProvider
+/// <summary>
+/// Provides the certificates configured for the hosts of the gateway.
+/// </summary>
+/// <remarks>
+/// Kestrel and the internal engine ask for a certificate per connection
+/// via <see cref="Provide" />. The ioxide engine terminates TLS itself and
+/// registers the certificates on startup, so it needs to know the hosts
+/// upfront and prefers the PEM files over the loaded certificate (which
+/// is the only form it accepts for HTTP/3).
+/// </remarks>
+public class CertificateProvider : IHostCertificateProvider, IFileCertificateProvider
 {
 
-        #region Get-/Setters
+    #region Get-/Setters
 
-    public Dictionary<string, X509Certificate2> Certificates { get; }
+    public Dictionary<string, HostCertificate> Certificates { get; }
 
-    public X509Certificate2? Default { get; }
+    public HostCertificate? Default { get; }
 
-        #endregion
+    public IEnumerable<string> Hosts => Certificates.Keys;
 
-    public CertificateProvider(Dictionary<string, X509Certificate2> certificates,
-        X509Certificate2? defaultCertificate)
+    #endregion
+
+    #region Initialization
+
+    public CertificateProvider(Dictionary<string, HostCertificate> certificates, HostCertificate? defaultCertificate)
     {
         Certificates = certificates;
         Default = defaultCertificate;
     }
 
-        #region Functionality
+    #endregion
 
-    public X509Certificate2? Provide(string? host)
+    #region Functionality
+
+    public X509Certificate2? Provide(string? host) => Resolve(host)?.Certificate;
+
+    public CertificateFiles? ProvideFiles(string? host) => Resolve(host)?.Files;
+
+    private HostCertificate? Resolve(string? host)
     {
-        if (host != null)
+        if (host != null && Certificates.TryGetValue(host, out var certificate))
         {
-            if (Certificates.TryGetValue(host, out var cert))
-            {
-                return cert;
-            }
+            return certificate;
         }
 
         return Default;
     }
 
-        #endregion
+    #endregion
 
 }
+
+/// <summary>
+/// A loaded certificate and, if it has been read from PEM files, their paths.
+/// </summary>
+public record HostCertificate(X509Certificate2 Certificate, CertificateFiles? Files);

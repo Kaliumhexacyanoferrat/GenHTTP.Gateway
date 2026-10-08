@@ -29,6 +29,14 @@ hosts:
     #   certificate:
     #    pfx: domain1.pfx
 
+    # alternatively, specify the certificate as PEM files
+    # (required for HTTP/3 when running on the ioxide engine)
+
+    # security:
+    #   certificate:
+    #    pem: domain1/fullchain.pem
+    #    key: domain1/privkey.pem
+
     # the web page that will be shown if domain1.com is called
     default:
       destination: http://10.0.0.2:8080
