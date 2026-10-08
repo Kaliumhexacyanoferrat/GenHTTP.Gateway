@@ -3,7 +3,11 @@
 public class GatewayConfiguration
 {
 
-    public bool? EnableQuic { get; set; }
+    public string? Engine { get; set; }
+
+    public PortConfiguration? Ports { get; set; }
+
+    public List<string>? Protocols { get; set; }
 
     public Dictionary<string, HostConfiguration>? Hosts { get; set; }
         

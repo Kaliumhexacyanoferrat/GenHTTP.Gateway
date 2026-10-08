@@ -1,6 +1,20 @@
-﻿# activate to enable HTTP/3 via QUIC
-# requires port 443 to be reachable via UDP
-enableQuic: false
+﻿# the server engine to run the gateway on
+# - kestrel (default): ASP.NET Core Kestrel, supports HTTP/1.1, HTTP/2 and HTTP/3
+# - internal: the built-in GenHTTP engine, supports HTTP/1.1 only
+# - ioxide: io_uring based engine (experimental, linux x64 with kernel 6.1+ only)
+engine: kestrel
+
+# the ports to listen on for plain HTTP and for HTTPS
+# (the secure port is only opened if at least one certificate is configured)
+ports:
+  plain: 80
+  secure: 443
+
+# the HTTP protocols to be supported on the secure port (http1, http2, http3)
+# http3 requires the secure port to be reachable via UDP
+protocols:
+  - http1
+  - http2
 
 hosts:
 

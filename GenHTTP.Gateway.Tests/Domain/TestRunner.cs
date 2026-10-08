@@ -61,11 +61,17 @@ public class TestRunner : IAsyncDisposable
     {
         var port = NextPort();
 
+        configuration.Ports = new PortConfiguration
+        {
+            Plain = port,
+            Secure = NextPort()
+        };
+
         var environment = env ?? TestEnvironment.Create();
 
         var handler = Gateway.Handler.Build(environment, configuration);
 
-        var host = Engine.Setup(environment, configuration, port)
+        var host = Engine.Setup(environment, configuration)
                          .Handler(handler);
 
         await host.StartAsync();
