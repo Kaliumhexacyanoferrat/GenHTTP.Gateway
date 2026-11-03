@@ -28,13 +28,13 @@
 
     <PackageReference Include="GenHTTP.Core.Kestrel" Version="11.1.0" />
 
-    <PackageReference Include="GenHTTP.Engine.Internal" Version="11.1.0" />
+    <PackageReference Include="GenHTTP.Engine.Internal" Version="11.2.0" />
 
     <PackageReference Include="GenHTTP.Engine.Ioxide" Version="11.1.0" />
 
     <PackageReference Include="GenHTTP.Modules.DirectoryBrowsing" Version="11.1.0" />
 
-    <PackageReference Include="GenHTTP.Modules.IO" Version="11.1.0" />
+    <PackageReference Include="GenHTTP.Modules.IO" Version="11.2.0" />
 
     <PackageReference Include="GenHTTP.Modules.Files" Version="11.1.0" />
 
