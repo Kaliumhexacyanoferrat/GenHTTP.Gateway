@@ -47,5 +47,4 @@ jobs:
 
       - name: Push Multi
         run: |
-          docker manifest create --amend genhttp/gateway:latest genhttp/gateway:linux-x64 genhttp/gateway:linux-arm32 genhttp/gateway:linux-arm64 genhttp/gateway:windows-x64
-          docker manifest push --purge genhttp/gateway:latest
+          docker buildx imagetools create -t genhttp/gateway:latest genhttp/gateway:linux-x64 genhttp/gateway:linux-arm32 genhttp/gateway:linux-arm64 genhttp/gateway:windows-x64
